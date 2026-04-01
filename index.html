@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>AWS クラウド技術入門（ショート版）</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ヘッダー：進捗表示 -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-brand" id="header-brand" style="cursor: pointer;" title="第1章へ戻る">
+        <span class="header-logo">AWS</span>
+        <h1 class="header-title">AWS クラウド技術入門</h1>
+      </div>
+      <div class="progress-info">
+        <span class="chapter-indicator">第 <span id="current-chapter">1</span> 章 / 全6章</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">説明パート</span>
+        <button class="progress-reset-btn" id="progress-reset-btn" title="進捗をリセット">
+          <span class="reset-icon">&#128260;</span>
+        </button>
+      </div>
+      <!-- 使い方ガイドアイコン（常時表示） -->
+      <div class="header-info-icon" id="header-info-icon" onclick="openUserGuide()" title="この学習アプリの使い方">
+        <img src="images/info.jpeg" alt="使い方ガイド" class="info-icon-image">
+      </div>
+    </div>
+  </header>
+
+  <!-- 左サイドナビゲーション -->
+  <nav class="side-nav" id="side-nav">
+    <div class="nav-trigger">
+      <span class="nav-icon">&#9776;</span>
+    </div>
+    <div class="nav-content">
+      <div class="nav-header">
+        <h2 class="nav-title">目次</h2>
+        <button class="nav-pin-btn" id="nav-pin-btn" title="ナビゲーションを固定">
+          <span class="pin-icon">&#128204;</span>
+        </button>
+      </div>
+      <ul class="nav-list" id="nav-list">
+        <!-- JavaScriptで動的に生成 -->
+      </ul>
+    </div>
+  </nav>
+
+  <!-- メインコンテンツエリア -->
+  <div class="content-wrapper">
+    <main class="main-content" id="main-content">
+      <!-- JavaScriptで動的に生成 -->
+    </main>
+  </div>
+
+  <!-- 右サイドナビゲーション（ページ内目次） -->
+  <nav class="page-nav" id="page-nav">
+    <div class="page-nav-trigger">
+      <span class="page-nav-icon">&#8801;</span>
+    </div>
+    <div class="page-nav-content">
+      <h3 class="page-nav-title">このページの内容</h3>
+      <ul class="page-nav-list" id="page-nav-list">
+        <!-- JavaScriptで動的に生成 -->
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 固定フッター：ナビゲーションボタン -->
+  <footer class="nav-footer">
+    <div class="nav-footer-content">
+      <button class="nav-btn prev-btn" id="prev-btn" disabled>
+        &#8592; 前へ
+      </button>
+      <span class="nav-footer-info" id="nav-footer-info">セクション 1 / 5</span>
+      <button class="nav-btn next-btn" id="next-btn">
+        次へ &#8594;
+      </button>
+    </div>
+    <div class="nav-footer-copyright">&copy; 2002 Kronos Co, Ltd</div>
+  </footer>
+
+  <!-- 使い方ガイドモーダル -->
+  <div class="user-guide-overlay" id="user-guide-overlay">
+    <div class="user-guide-modal">
+      <button class="user-guide-close-btn" id="user-guide-close-btn">&times;</button>
+      <div class="user-guide-header">
+        <span class="user-guide-icon">&#128214;</span>
+        <h2 class="user-guide-title">この学習アプリの使い方</h2>
+      </div>
+      <div class="user-guide-content">
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">1</span>画面構成</h3>
+          <div class="guide-layout-diagram">
+            <div class="layout-box layout-header">ヘッダー（進捗バー・章の表示）</div>
+            <div class="layout-main-area">
+              <div class="layout-box layout-sidebar">左メニュー<br>（目次）</div>
+              <div class="layout-box layout-content">メインコンテンツ<br>（学習内容）</div>
+              <div class="layout-box layout-right-nav">右メニュー<br>（ページ内目次）</div>
+            </div>
+            <div class="layout-box layout-footer">フッター（前へ・次へボタン）</div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">2</span>進捗バー</h3>
+          <p style="font-size: 14px; color: #666; margin: 0 0 12px 0;">
+            ヘッダーの進捗バーで、現在の学習状況を確認できます。
+          </p>
+          <div class="guide-progress-demo">
+            <div class="guide-progress-bar">
+              <div class="guide-progress-fill"></div>
+            </div>
+            <div class="guide-progress-text">第 1 章 / 全6章</div>
+          </div>
+          <ul class="guide-list" style="margin-top: 12px;">
+            <li>
+              <span class="guide-list-icon">&#128202;</span>
+              <div>
+                <strong>進捗の確認</strong><br>
+                オレンジ色のバーが学習の進み具合を表します
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#128260;</span>
+              <div>
+                <strong>進捗のリセット</strong><br>
+                リセットボタンで学習進捗を最初からやり直せます
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">3</span>左ナビゲーション（目次）</h3>
+          <ul class="guide-list">
+            <li>
+              <span class="guide-list-icon">&#9776;</span>
+              <div>
+                <strong>目次を開く</strong><br>
+                画面の左端にカーソルを合わせると、目次メニューが表示されます
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#128204;</span>
+              <div>
+                <strong>目次を固定</strong><br>
+                目次上部のピン&#128204;アイコンをクリックすると、目次を常に表示した状態に固定できます
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#128193;</span>
+              <div>
+                <strong>章・セクションの移動</strong><br>
+                目次から任意の章やセクションをクリックして直接移動できます
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">4</span>右ナビゲーション（ページ内目次）</h3>
+          <ul class="guide-list">
+            <li>
+              <span class="guide-list-icon">&#8801;</span>
+              <div>
+                <strong>ページ内目次を開く</strong><br>
+                画面の右端にカーソルを合わせると、現在のページ内の見出し一覧が表示されます
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#128279;</span>
+              <div>
+                <strong>見出しへジャンプ</strong><br>
+                見出しをクリックすると、ページ内の該当箇所へスムーズにスクロールします
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">5</span>基本操作</h3>
+          <ul class="guide-list">
+            <li>
+              <span class="guide-list-icon">&#9654;</span>
+              <div>
+                <strong>次へ進む</strong><br>
+                画面下部の「次へ →」ボタンをクリック
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#9664;</span>
+              <div>
+                <strong>前へ戻る</strong><br>
+                画面下部の「← 前へ」ボタンをクリック
+              </div>
+            </li>
+            <li>
+              <span class="guide-list-icon">&#127968;</span>
+              <div>
+                <strong>トップに戻る</strong><br>
+                左上のロゴをクリックすると第1章の最初に戻ります
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">6</span>学習の流れ</h3>
+          <div class="guide-flow">
+            <div class="guide-flow-step">
+              <span class="flow-step-num">1</span>
+              <span class="flow-step-label">説明を読む</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="guide-flow-step">
+              <span class="flow-step-num">2</span>
+              <span class="flow-step-label">理解度テスト</span>
+            </div>
+          </div>
+          <p class="guide-note">各章は「説明 → テスト」の順で構成されています。</p>
+        </div>
+
+        <div class="guide-section">
+          <h3 class="guide-section-title"><span class="guide-num">7</span>便利な機能</h3>
+          <ul class="guide-list">
+            <li>
+              <span class="guide-list-icon highlight-icon">AWS</span>
+              <div>
+                <strong>用語の説明</strong><br>
+                オレンジ色でハイライトされた用語をクリックすると、説明が表示されます
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="user-guide-footer">
+        <button class="user-guide-start-btn" onclick="closeUserGuide()">学習を始める</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 章ファイルを順番に読み込み -->
+  <script src="chapters/chapter01.js"></script>
+  <script src="chapters/chapter02.js"></script>
+  <script src="chapters/chapter03.js"></script>
+  <script src="chapters/chapter04.js"></script>
+  <script src="chapters/chapter05.js"></script>
+  <script src="chapters/chapter06.js"></script>
+  <!-- 最後にメインスクリプト -->
+  <script src="app.js"></script>
+</body>
+</html>
