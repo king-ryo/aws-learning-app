@@ -796,6 +796,16 @@ body {
   margin-bottom: var(--space-md);
 }
 
+.chapter-container ul, 
+.chapter-container ol {
+  padding-left: 1.5rem; /* 左側にインデントを追加 */
+  margin-bottom: var(--space-md); /* 下部の余白 */
+}
+
+.chapter-container li {
+  margin-bottom: var(--space-xs); /* 項目間の余白 */
+}
+
 .highlight {
   background: linear-gradient(transparent 60%, var(--primary-bg) 60%);
   font-weight: 600;

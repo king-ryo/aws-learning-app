@@ -257,7 +257,8 @@ const chapters = [
   { id: 3, title: '03章 仮想ネットワーク構築（VPC）', data: chapter03 },
   { id: 4, title: '04章 仮想サーバー構築（EC2）', data: chapter04 },
   { id: 5, title: '05章 データベースサービス（RDS）', data: chapter05 },
-  { id: 6, title: '06章 オブジェクトストレージ（S3）', data: chapter06 }
+  { id: 6, title: '06章 オブジェクトストレージ（S3）', data: chapter06 },
+  { id: 7, title: '07章 コンテナレジストリ（ECR）', data: chapter07 }
 ];
 
 // ========================================

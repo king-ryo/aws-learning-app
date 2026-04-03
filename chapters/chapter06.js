@@ -676,61 +676,6 @@ const chapter06 = {
           }
         }
       ]
-    },
-    // 修了画面
-    {
-      id: "6-complete",
-      title: "修了",
-      type: "explanation",
-      content: `
-        <div class="chapter-container">
-          <div class="confetti-container" id="confetti-container"></div>
-
-          <div class="completion-screen">
-            <div class="completion-badge">&#127891;</div>
-            <h2 class="completion-title">全6章 修了おめでとうございます！</h2>
-            <p class="completion-subtitle">AWS クラウド技術入門のすべての章を学習しました</p>
-            <div class="completion-chapters">
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>01 AWSの概要</div>
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>02 IAM</div>
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>03 VPC</div>
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>04 EC2</div>
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>05 RDS</div>
-              <div class="completion-chapter-item"><span class="completion-check">&#10003;</span>06 S3</div>
-            </div>
-            <div class="completion-actions">
-              <button class="completion-btn completion-btn-primary" onclick="navigateToChapter(0)">最初に戻る</button>
-            </div>
-          </div>
-        </div>
-
-        <script>
-          (function() {
-            const container = document.getElementById('confetti-container');
-            if (!container) return;
-            const colors = ['#FF9900', '#EC7211', '#FFAC31', '#232F3E', '#146EB4', '#4CAF50', '#E91E63', '#FFD700'];
-            const shapes = ['square', 'circle', 'triangle'];
-            for (let i = 0; i < 80; i++) {
-              const piece = document.createElement('div');
-              const shape = shapes[Math.floor(Math.random() * shapes.length)];
-              piece.className = 'confetti-piece confetti-' + shape;
-              piece.style.left = Math.random() * 100 + '%';
-              piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-              piece.style.animationDelay = (Math.random() * 3) + 's';
-              piece.style.animationDuration = (3 + Math.random() * 4) + 's';
-              const size = 6 + Math.random() * 10;
-              piece.style.width = size + 'px';
-              piece.style.height = (shape === 'circle' ? size : size * 0.6) + 'px';
-              container.appendChild(piece);
-            }
-            // 8秒後にフェードアウト
-            setTimeout(function() {
-              container.style.transition = 'opacity 2s';
-              container.style.opacity = '0';
-            }, 8000);
-          })();
-        </script>
-      `
     }
   ]
 };

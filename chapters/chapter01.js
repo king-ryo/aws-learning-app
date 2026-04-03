@@ -60,7 +60,7 @@ const chapter01 = {
 
           <h2 class="section-title">&#128506; コースの全体像</h2>
           <p class="text-paragraph">
-            この教材では、AWSの基礎から実践的な構築まで、<span class="highlight">全6章</span>で体系的に学習できます。
+            この教材では, AWSの基礎から実践的な構築まで, <span class="highlight">全7章</span>で体系的に学習できます。
             各章は前の章の知識を活かして進められるよう構成されています。
           </p>
 
@@ -120,6 +120,19 @@ const chapter01 = {
                   <div class="roadmap-card-content">
                     <h4 class="roadmap-card-title">オブジェクトストレージ（S3）</h4>
                     <p class="roadmap-card-desc">ストレージの基礎を学ぶ</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="roadmap-category">
+              <div class="category-title">&#128640; コンテナ編</div>
+              <div class="roadmap-grid">
+                <div class="roadmap-card chapter-available" onclick="navigateToChapter(6)">
+                  <div class="roadmap-card-number">07</div>
+                  <div class="roadmap-card-content">
+                    <h4 class="roadmap-card-title">コンテナレジストリ（ECR）</h4>
+                    <p class="roadmap-card-desc">コンテナイメージの管理を学ぶ</p>
                   </div>
                 </div>
               </div>
