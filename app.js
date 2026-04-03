@@ -593,6 +593,9 @@ function renderContent() {
   // AWSキーワードのクリックイベントを設定
   setupKeywordListeners();
 
+  // 画像モーダルのイベントを設定
+  setupImageModal();
+
   // スクロールをトップに戻す
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -913,6 +916,21 @@ function setupEventListeners() {
 
   // キーボードナビゲーション
   document.addEventListener('keydown', (e) => {
+    const isModalOpen = document.getElementById('image-modal')?.classList.contains('show');
+    if (isModalOpen) {
+      const prevBtn = document.getElementById('image-modal-prev');
+      const nextBtn = document.getElementById('image-modal-next');
+      if (e.key === 'ArrowLeft' && prevBtn && prevBtn.style.display !== 'none' && !prevBtn.classList.contains('disabled')) {
+        prevBtn.click();
+      } else if (e.key === 'ArrowRight' && nextBtn && nextBtn.style.display !== 'none' && !nextBtn.classList.contains('disabled')) {
+        nextBtn.click();
+      } else if (e.key === 'Escape') {
+        const closeBtn = document.getElementById('image-modal-close');
+        if (closeBtn) closeBtn.click();
+      }
+      return; // モーダルが開いている時は章移動しない
+    }
+
     if (e.key === 'ArrowLeft') {
       if (!elements.prevBtn.disabled) {
         goToPrevSection();
@@ -1246,6 +1264,152 @@ function prevInlineSlide(name) {
     ss.current--;
     renderInlineSlide(name);
   }
+}
+
+// ========================================
+// 画像モーダル機能
+// ========================================
+function setupImageModal() {
+  const modal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('image-modal-img');
+  const captionText = document.getElementById('image-modal-caption');
+  const closeBtn = document.getElementById('image-modal-close');
+  const prevBtn = document.getElementById('image-modal-prev');
+  const nextBtn = document.getElementById('image-modal-next');
+
+  if (!modal || !modalImg || !captionText || !closeBtn) return;
+
+  let currentImageIndex = 0;
+  let currentImages = [];
+
+  // モーダルを閉じる関数
+  const closeModal = () => {
+    modal.classList.remove('show');
+    setTimeout(() => {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    }, 300);
+  };
+
+  const updateNavButtons = () => {
+    if (!prevBtn || !nextBtn) return;
+    prevBtn.classList.toggle('disabled', currentImageIndex <= 0);
+    nextBtn.classList.toggle('disabled', currentImageIndex >= currentImages.length - 1);
+  };
+
+  const showImage = (index) => {
+    if (currentImages.length === 0) return;
+    if (index < 0 || index >= currentImages.length) return;
+
+    currentImageIndex = index;
+    updateNavButtons();
+    const img = currentImages[currentImageIndex];
+    
+    // 画像切り替え時の軽いアニメーション
+    modalImg.style.opacity = '0';
+    setTimeout(() => {
+      modalImg.src = img.src;
+      captionText.innerHTML = `${currentImageIndex + 1} / ${currentImages.length}`;
+      modalImg.style.opacity = '1';
+    }, 150);
+  };
+
+  // 前へボタン
+  if (prevBtn) {
+    const newPrevBtn = prevBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+    newPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!newPrevBtn.classList.contains('disabled')) {
+        showImage(currentImageIndex - 1);
+      }
+    });
+  }
+
+  // 次へボタン
+  if (nextBtn) {
+    const newNextBtn = nextBtn.cloneNode(true);
+    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+    newNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!newNextBtn.classList.contains('disabled')) {
+        showImage(currentImageIndex + 1);
+      }
+    });
+  }
+
+  // 閉じるイベントのリスナーを一度だけ追加するため、古い要素を置換する
+  const newCloseBtn = closeBtn.cloneNode(true);
+  closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+  newCloseBtn.addEventListener('click', closeModal);
+
+  // モーダル背景クリックで閉じる
+  // 既存のイベントリスナーが蓄積しないよう、onclickプロパティを使用
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  };
+
+  // 画像のクリックイベントを設定
+  const allImages = elements.mainContent.querySelectorAll('img:not(.no-modal)');
+
+  allImages.forEach((img) => {
+    // 既存のイベントをクリアするために再生成
+    const newImg = img.cloneNode(true);
+    img.parentNode.replaceChild(newImg, img);
+    
+    newImg.addEventListener('click', function() {
+      // 自身が属するブロックを特定する
+      const slideshowBlock = this.closest('.inline-slideshow');
+      
+      if (slideshowBlock) {
+        // インラインスライドの場合、そのスライドショーの画像一覧を取得
+        const leftArrow = slideshowBlock.querySelector('[data-slideshow]');
+        if (leftArrow) {
+          const ssName = leftArrow.dataset.slideshow;
+          const ssInfo = inlineSlideshows[ssName];
+          if (ssInfo) {
+            currentImages = [];
+            for (let i = 0; i < ssInfo.config.pageCount; i++) {
+              const num = String(i + 1).padStart(2, '0');
+              currentImages.push({
+                src: `${ssInfo.config.folder}/${ssInfo.config.prefix}${num}.png`,
+                alt: `${ssInfo.config.prefix} ${i + 1} / ${ssInfo.config.pageCount}`
+              });
+            }
+            // クリックされた画像のインデックスは現在のスライド
+            currentImageIndex = ssInfo.current;
+          }
+        }
+      } else {
+        // 通常の画像が含まれるブロック
+        const block = this.closest('.step-container, .card, .summary-box, .point-box, .warning-box, .info-box, .example-container, .chapter-container') || elements.mainContent;
+        const blockImages = Array.from(block.querySelectorAll('img:not(.no-modal)'));
+        currentImages = blockImages.map(el => ({ src: el.src, alt: el.alt }));
+        const domIndex = blockImages.indexOf(this);
+        currentImageIndex = domIndex >= 0 ? domIndex : 0;
+      }
+
+      // 画像が複数ある場合のみ左右のボタンとキャプションを表示
+      const navDisplay = currentImages.length > 1 ? 'block' : 'none';
+      if (prevBtn) prevBtn.style.display = navDisplay;
+      if (nextBtn) nextBtn.style.display = navDisplay;
+      captionText.style.display = currentImages.length > 1 ? 'block' : 'none';
+      
+      updateNavButtons();
+
+      modal.style.display = 'block';
+      modalImg.style.opacity = '1';
+      modalImg.src = this.src;
+      captionText.innerHTML = `${currentImageIndex + 1} / ${currentImages.length}`;
+      
+      // 少し遅延させてopacityアニメーションを効かせる
+      setTimeout(() => {
+        modal.classList.add('show');
+      }, 10);
+    });
+  });
 }
 
 // ========================================

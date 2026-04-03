@@ -246,6 +246,630 @@ const chapter02 = {
         </div>
       `
     },
+    // ハンズオン1: IAMグループとIAMユーザーの作成
+    {
+      id: "2-handson1",
+      title: "デモ：IAMグループとIAMユーザーの作成",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; デモ：IAMグループとIAMユーザーの作成</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> AWSマネジメントコンソール</li>
+              <li><strong>ゴール：</strong> IAMグループを作成して適切なポリシーを設定し、そこに新規作成したIAMユーザーを追加して権限を管理する。</li>
+            </ul>
+          </div>
+
+          <h3 class="section-subtitle">IAMグループの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">コンソールへのログイン</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ルートユーザーまたは管理者権限を持つユーザーでAWSマネジメントコンソールにログインします。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">IAMサービスを開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">コンソール上部の検索窓に「IAM」と入力し、サービス一覧から「IAM」を選択してダッシュボードを開きます。</p>
+              
+              <!-- IAMグループ作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-group2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-group2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-group2-slide-img" src="images/02/handson/create-group201.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-group2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-group2-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-group2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-group2', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-group2',
+                  pageCount: 2,
+                  imgId: 'create-group2-slide-img',
+                  counterId: 'create-group2-counter',
+                  indicatorsId: 'create-group2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">ユーザーグループの作成開始</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左側のメニューから「ユーザーグループ」を選択し、「グループを作成」をクリックします。</p>
+              
+              <!-- IAMグループ作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-group3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-group3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-group3-slide-img" src="images/02/handson/create-group301.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-group3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-group3-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-group3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-group3', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-group3',
+                  pageCount: 2,
+                  imgId: 'create-group3-slide-img',
+                  counterId: 'create-group3-counter',
+                  indicatorsId: 'create-group3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">グループ名の入力</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">グループ名（例: <code>Developers</code>）を入力します。</p>
+
+              <!-- IAMグループ作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-group4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-group4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-group4-slide-img" src="images/02/handson/create-group401.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-group4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-group4-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-group4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-group4', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-group4',
+                  pageCount: 2,
+                  imgId: 'create-group4-slide-img',
+                  counterId: 'create-group4-counter',
+                  indicatorsId: 'create-group4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">グループの作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">画面下部の「グループを作成」をクリックします。</p>
+              <p class="text-paragraph"><small>※現時点ではポリシー（権限）は設定しません。次の工程で作成するカスタムポリシーを後ほどアタッチします。</small></p>
+
+              <!-- IAMグループ作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-group5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-group5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-group5-slide-img" src="images/02/handson/create-group501.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-group5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-group5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-group5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-group5', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-group5',
+                  pageCount: 2,
+                  imgId: 'create-group5-slide-img',
+                  counterId: 'create-group5-counter',
+                  indicatorsId: 'create-group5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">カスタムポリシーの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ポリシー作成画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左側のメニューから「ポリシー」を選択し、「ポリシーの作成」をクリックして作成画面を開きます。</p>
+
+              <!-- カスタムポリシー作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-policy1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-policy1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-policy1-slide-img" src="images/02/handson/create-policy101.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-policy1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-policy1-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-policy1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-policy1', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-policy1',
+                  pageCount: 2,
+                  imgId: 'create-policy1-slide-img',
+                  counterId: 'create-policy1-counter',
+                  indicatorsId: 'create-policy1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">アクセス許可を指定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「JSON」タブを選択し、以下のコードを貼り付けます。貼り付け後、画面下部の「次へ」をクリックします。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:*",
+                "s3:*",
+                "ecr:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}</div>
+
+              <!-- カスタムポリシー作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-policy2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-policy2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-policy2-slide-img" src="images/02/handson/create-policy201.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-policy2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-policy2-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-policy2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-policy2', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-policy2',
+                  pageCount: 3,
+                  imgId: 'create-policy2-slide-img',
+                  counterId: 'create-policy2-counter',
+                  indicatorsId: 'create-policy2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">確認して作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ポリシー名（例: <code>CustomHandsOnPolicy</code>）を入力し、画面下部の「ポリシーの作成」をクリックします。</p>
+
+              <!-- カスタムポリシー作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-policy3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-policy3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-policy3-slide-img" src="images/02/handson/create-policy301.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-policy3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-policy3-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-policy3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-policy3', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-policy3',
+                  pageCount: 3,
+                  imgId: 'create-policy3-slide-img',
+                  counterId: 'create-policy3-counter',
+                  indicatorsId: 'create-policy3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">グループの選択</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左メニューの「ユーザーグループ」から作成したグループ（<code>Developers</code>）を選択し、「許可」タブ → 「許可を追加」 → 「ポリシーをアタッチ」をクリックします。</p>
+
+              <!-- カスタムポリシー作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-policy4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-policy4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-policy4-slide-img" src="images/02/handson/create-policy401.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-policy4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-policy4-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-policy4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-policy4', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-policy4',
+                  pageCount: 3,
+                  imgId: 'create-policy4-slide-img',
+                  counterId: 'create-policy4-counter',
+                  indicatorsId: 'create-policy4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">ポリシーのアタッチ</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">作成した <code>CustomHandsOnPolicy</code> を検索して選択し、画面右下の「ポリシーをアタッチ」ボタンをクリックして追加します。</p>
+
+              <!-- カスタムポリシー作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-policy5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-policy5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-policy5-slide-img" src="images/02/handson/create-policy501.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-policy5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-policy5-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-policy5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-policy5', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-policy5',
+                  pageCount: 3,
+                  imgId: 'create-policy5-slide-img',
+                  counterId: 'create-policy5-counter',
+                  indicatorsId: 'create-policy5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">IAMユーザーの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">IAMユーザーの作成開始</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左側のメニューから「ユーザー」を選択し、「ユーザーの作成」をクリックします。</p>
+
+              <!-- IAMユーザー作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-user1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-user1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-user1-slide-img" src="images/02/handson/create-user101.png" alt="IAMユーザー 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-user1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-user1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-user1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-user1', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-user1',
+                  pageCount: 1,
+                  imgId: 'create-user1-slide-img',
+                  counterId: 'create-user1-counter',
+                  indicatorsId: 'create-user1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">ユーザー詳細の設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ユーザー名（例: <code>aws-user</code>）を入力し、「AWS マネジメントコンソールへのユーザーアクセスを提供する」にチェックを入れ、カスタムパスワード（例: <code>AWS-password-1234</code>）を設定した後、画面右下の「次へ」をクリックします。</p>
+
+              <!-- IAMユーザー作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-user2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-user2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-user2-slide-img" src="images/02/handson/create-user201.png" alt="IAMユーザー 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-user2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-user2-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-user2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-user2', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-user2',
+                  pageCount: 2,
+                  imgId: 'create-user2-slide-img',
+                  counterId: 'create-user2-counter',
+                  indicatorsId: 'create-user2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">グループへの追加</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「許可のオプション」で「ユーザーをグループに追加」を選択し、先ほど作成したグループ（例: <code>Developers</code>）にチェックを入れてから、画面右下の「次へ」をクリックします。</p>
+
+              <!-- IAMユーザー作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-user3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-user3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-user3-slide-img" src="images/02/handson/create-user301.png" alt="IAMユーザー 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-user3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-user3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-user3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-user3', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-user3',
+                  pageCount: 1,
+                  imgId: 'create-user3-slide-img',
+                  counterId: 'create-user3-counter',
+                  indicatorsId: 'create-user3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">内容の確認と作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">これまでの設定内容を確認し、画面右下の「ユーザーの作成」をクリックします。</p>
+
+              <!-- IAMユーザー作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-user4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-user4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-user4-slide-img" src="images/02/handson/create-user401.png" alt="IAMユーザー 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-user4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-user4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-user4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-user4', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-user4',
+                  pageCount: 1,
+                  imgId: 'create-user4-slide-img',
+                  counterId: 'create-user4-counter',
+                  indicatorsId: 'create-user4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">パスワードの取得</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">コンソールサインインURLやパスワードなどのログイン情報を確認し、CSVファイルをダウンロードするか、安全な場所に必ず控えておきます。</p>
+
+              <!-- IAMユーザー作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-user5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-user5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-user5-slide-img" src="images/02/handson/create-user501.png" alt="IAMユーザー 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-user5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-user5-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-user5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-user5', {
+                  folder: 'images/02/handson',
+                  prefix: 'create-user5',
+                  pageCount: 1,
+                  imgId: 'create-user5-slide-img',
+                  counterId: 'create-user5-counter',
+                  indicatorsId: 'create-user5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+      `
+    },
     // セクション3: IAMユーザーによるサインイン
     {
       id: "2-2",
@@ -339,6 +963,208 @@ const chapter02 = {
           <!-- MFA 画像 -->
           <div style="margin: var(--space-xl) 0; text-align: center;">
             <img src="images/02/mfa.png" alt="MFA（多要素認証）" style="max-width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン2: IAMユーザーのサインイン
+    {
+      id: "2-handson2",
+      title: "ハンズオン：IAMユーザーのサインイン",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン：IAMユーザーのサインイン</h2>
+
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> ローカル（Macのブラウザ等）</li>
+              <li><strong>ゴール：</strong> URL等必要な情報を配布し、作成したIAMユーザーでサインインする。</li>
+            </ul>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">準備</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">手元に「コンソールのサインインURL」「ユーザー名」「パスワード」が準備されていることを確認します。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">サインインURLを開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ハンズオン1で作成した「コンソールのサインインURL」をブラウザで開きます。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">アカウントIDの確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">アカウントID（またはエイリアス）が入力されていることを確認します。</p>
+              
+              <!-- IAMユーザーサインイン手順3 スライドショー -->
+              <div class="inline-slideshow" id="user-signin3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="user-signin3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="user-signin3-slide-img" src="images/02/handson/user-signin301.png" alt="IAMユーザーサインイン 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="user-signin3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="user-signin3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="user-signin3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('user-signin3', {
+                  folder: 'images/02/handson',
+                  prefix: 'user-signin3',
+                  pageCount: 1,
+                  imgId: 'user-signin3-slide-img',
+                  counterId: 'user-signin3-counter',
+                  indicatorsId: 'user-signin3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">情報の入力</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">準備した「ユーザー名」と「パスワード」を入力してサインインします。</p>
+              
+              <!-- IAMユーザーサインイン手順4 スライドショー -->
+              <div class="inline-slideshow" id="user-signin4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="user-signin4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="user-signin4-slide-img" src="images/02/handson/user-signin401.png" alt="IAMユーザーサインイン 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="user-signin4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="user-signin4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="user-signin4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('user-signin4', {
+                  folder: 'images/02/handson',
+                  prefix: 'user-signin4',
+                  pageCount: 1,
+                  imgId: 'user-signin4-slide-img',
+                  counterId: 'user-signin4-counter',
+                  indicatorsId: 'user-signin4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">パスワードの変更</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">（初回ログイン時）画面の指示に従い、初期パスワードから新しいパスワードに変更します。</p>
+              
+              <!-- IAMユーザーサインイン手順5 スライドショー -->
+              <div class="inline-slideshow" id="user-signin5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="user-signin5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="user-signin5-slide-img" src="images/02/handson/user-signin501.png" alt="IAMユーザーサインイン 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="user-signin5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="user-signin5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="user-signin5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('user-signin5', {
+                  folder: 'images/02/handson',
+                  prefix: 'user-signin5',
+                  pageCount: 2,
+                  imgId: 'user-signin5-slide-img',
+                  counterId: 'user-signin5-counter',
+                  indicatorsId: 'user-signin5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">6</span>
+              <span class="step-title">ダッシュボードの確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">サインイン後、AWSマネジメントコンソールのダッシュボードが表示されることを確認します。画面右上の表示が、作成したIAMユーザー名になっていることを確認してください。</p>
+              
+              <!-- IAMユーザーサインイン手順6 スライドショー -->
+              <div class="inline-slideshow" id="user-signin6-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="user-signin6" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="user-signin6-slide-img" src="images/02/handson/user-signin601.png" alt="IAMユーザーサインイン 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="user-signin6" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="user-signin6-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="user-signin6-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('user-signin6', {
+                  folder: 'images/02/handson',
+                  prefix: 'user-signin6',
+                  pageCount: 1,
+                  imgId: 'user-signin6-slide-img',
+                  counterId: 'user-signin6-counter',
+                  indicatorsId: 'user-signin6-indicators'
+                });
+              </script>
+            </div>
           </div>
 
           <div class="summary-box">
