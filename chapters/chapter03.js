@@ -591,6 +591,1096 @@ const chapter03 = {
         </div>
       `
     },
+    // ハンズオン1: VPCを作成する
+    {
+      id: "3-handson1",
+      title: "ハンズオン：VPCを作成する",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン：VPCを作成する</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> AWSマネジメントコンソール</li>
+              <li><strong>ゴール：</strong> EC2インスタンスを配置するためのネットワークの土台を作成する。</li>
+            </ul>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">&#128193; 土台の全体像</div>
+            <p>今回作成するネットワークの構成は以下の通りです。</p>
+            <ul class="feature-list" style="margin-bottom: 0;">
+              <li><strong>VPC</strong>
+                <ul class="feature-list">
+                  <li><strong>サブネット</strong>
+                    <ul class="feature-list">
+                      <li>プライベートサブネット</li>
+                      <li>パブリックサブネット</li>
+                    </ul>
+                  </li>
+                  <li><strong>インターネットゲートウェイ</strong></li>
+                  <li><strong>ルートテーブル</strong></li>
+                  <li><strong>セキュリティグループ</strong></li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- 全体像 スライドショー -->
+            <div class="inline-slideshow" id="handson-architecture-slideshow">
+              <div class="inline-slideshow-header">
+                <h3 class="inline-slideshow-title">&#128196; 構成図</h3>
+              </div>
+              <div class="inline-slideshow-body">
+                <div class="inline-slide-area">
+                  <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="handson-architecture" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                  <div class="inline-slide-image-wrapper">
+                    <img class="inline-slide-image" id="handson-architecture-slide-img" src="images/03/handson/architecture01.png" alt="構成図 1 / 1">
+                  </div>
+                  <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="handson-architecture" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                </div>
+                <div class="inline-slide-counter-area">
+                  <span class="inline-slide-counter" id="handson-architecture-counter">1 / 1</span>
+                </div>
+                <div class="inline-slide-indicators" id="handson-architecture-indicators"></div>
+              </div>
+            </div>
+
+            <script>
+              initInlineSlideshow('handson-architecture', {
+                folder: 'images/03/handson',
+                prefix: 'architecture',
+                pageCount: 1,
+                imgId: 'handson-architecture-slide-img',
+                counterId: 'handson-architecture-counter',
+                indicatorsId: 'handson-architecture-indicators'
+              });
+            </script>
+          </div>
+
+          <h3 class="section-subtitle">VPCの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">VPCサービスを開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">コンソールの上部の検索窓に「VPC」と入力し、サービス一覧から「VPC」を選択してダッシュボードを開きます。</p>
+              
+              <!-- VPC作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-vpc1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-vpc1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-vpc1-slide-img" src="images/02/handson/create-vpc101.png" alt="VPCサービスを開く 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-vpc1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-vpc1-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-vpc1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-vpc1', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-vpc1',
+                  pageCount: 2,
+                  imgId: 'create-vpc1-slide-img',
+                  counterId: 'create-vpc1-counter',
+                  indicatorsId: 'create-vpc1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">リージョンの選択</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">右上のリージョン選択メニューから、適切なリージョン（例: 東京リージョン）が選択されていることを確認します。</p>
+              
+              <!-- VPC作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-vpc2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-vpc2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-vpc2-slide-img" src="images/03/handson/create-vpc201.png" alt="リージョンの選択 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-vpc2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-vpc2-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-vpc2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-vpc2', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-vpc2',
+                  pageCount: 1,
+                  imgId: 'create-vpc2-slide-img',
+                  counterId: 'create-vpc2-counter',
+                  indicatorsId: 'create-vpc2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">VPCの作成開始</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「お使いのVPC」から「VPCを作成」をクリックします。</p>
+
+              <!-- VPC作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-vpc3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-vpc3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-vpc3-slide-img" src="images/03/handson/create-vpc301.png" alt="VPCの作成開始 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-vpc3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-vpc3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-vpc3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-vpc3', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-vpc3',
+                  pageCount: 1,
+                  imgId: 'create-vpc3-slide-img',
+                  counterId: 'create-vpc3-counter',
+                  indicatorsId: 'create-vpc3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">VPCの設定</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li><strong>作成するリソース:</strong> 「VPCのみ」</li>
+                <div class="info-box" style="margin-top: 15px;">
+                  <div class="info-box-title">&#128161; 「VPCなど」を選択した場合</div>
+                  <p>
+                    「VPCなど」を選択すると、サブネットやインターネットゲートウェイなどを一括で自動作成してくれます。
+                    とても便利ですが、<strong>今回は学習のため、それぞれの役割を理解しながら一つずつ作成</strong>していきます。
+                  </p>
+              </div>
+                <li><strong>名前タグ:</strong> 例 <code>my-vpc-xx</code>（xxは同一アカウントの他のユーザと被らないように）</li>
+                <li><strong>IPv4 CIDR ブロック:</strong> 例 <code>10.xx.0.0/16</code></li>
+              </ul>
+              <p class="text-paragraph" style="margin-top: 15px;">設定後、「VPC を作成」をクリックします。</p>
+              
+              <!-- VPC作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-vpc4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-vpc4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-vpc4-slide-img" src="images/03/handson/create-vpc401.png" alt="VPCの設定 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-vpc4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-vpc4-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-vpc4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-vpc4', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-vpc4',
+                  pageCount: 3,
+                  imgId: 'create-vpc4-slide-img',
+                  counterId: 'create-vpc4-counter',
+                  indicatorsId: 'create-vpc4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">サブネットの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">サブネット作成画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左メニューの「サブネット」から「サブネットを作成」をクリックします。</p>
+
+              <!-- サブネット作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-subnet1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-subnet1-slide-img" src="images/03/handson/create-subnet101.png" alt="サブネット作成画面を開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-subnet1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-subnet1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-subnet1', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-subnet1',
+                  pageCount: 1,
+                  imgId: 'create-subnet1-slide-img',
+                  counterId: 'create-subnet1-counter',
+                  indicatorsId: 'create-subnet1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">VPCの選択</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">先程作成したVPCを選択します。</p>
+
+              <!-- サブネット作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-subnet2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-subnet2-slide-img" src="images/03/handson/create-subnet201.png" alt="VPCの選択 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-subnet2-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-subnet2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-subnet2', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-subnet2',
+                  pageCount: 1,
+                  imgId: 'create-subnet2-slide-img',
+                  counterId: 'create-subnet2-counter',
+                  indicatorsId: 'create-subnet2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">パブリックサブネットの設定</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li><strong>サブネット名:</strong> <code>public-subnet-1a-xx</code></li>
+                <li><strong>アベイラビリティゾーン:</strong> <code>ap-northeast-1a</code></li>
+                <li><strong>IPv4 VPC CIDR ブロック:</strong> <code>10.xx.0.0/16</code></li>
+                <li><strong>IPv4 サブネット CIDR ブロック:</strong> <code>10.xx.1.0/24</code></li>
+              </ul>
+
+              <!-- サブネット作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-subnet3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-subnet3-slide-img" src="images/03/handson/create-subnet301.png" alt="パブリックサブネットの設定 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-subnet3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-subnet3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-subnet3', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-subnet3',
+                  pageCount: 1,
+                  imgId: 'create-subnet3-slide-img',
+                  counterId: 'create-subnet3-counter',
+                  indicatorsId: 'create-subnet3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">プライベートサブネットの追加</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「新しいサブネットを追加」を押して、以下を設定します。</p>
+              <ul class="feature-list">
+                <li><strong>サブネット名:</strong> <code>private-subnet-1a-xx</code></li>
+                <li><strong>アベイラビリティゾーン:</strong> <code>ap-northeast-1a</code></li>
+                <li><strong>IPv4 VPC CIDR ブロック:</strong> <code>10.xx.0.0/16</code></li>
+                <li><strong>IPv4 サブネット CIDR ブロック:</strong> <code>10.xx.2.0/24</code></li>
+              </ul>
+
+              <!-- サブネット作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-subnet4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-subnet4-slide-img" src="images/03/handson/create-subnet401.png" alt="プライベートサブネットの追加 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-subnet4-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-subnet4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-subnet4', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-subnet4',
+                  pageCount: 2,
+                  imgId: 'create-subnet4-slide-img',
+                  counterId: 'create-subnet4-counter',
+                  indicatorsId: 'create-subnet4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">サブネットを作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「サブネット作成」をクリックし、サブネットを作成します。</p>
+
+              <!-- サブネット作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-subnet5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-subnet5-slide-img" src="images/03/handson/create-subnet501.png" alt="サブネットを作成 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-subnet5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-subnet5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-subnet5', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-subnet5',
+                  pageCount: 2,
+                  imgId: 'create-subnet5-slide-img',
+                  counterId: 'create-subnet5-counter',
+                  indicatorsId: 'create-subnet5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">インターネットゲートウェイの作成</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">インターネットゲートウェイ作成画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左メニューの「インターネットゲートウェイ」→「インターネットゲートウェイの作成」をクリックします。</p>
+
+              <!-- インターネットゲートウェイ作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-igw1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-igw1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-igw1-slide-img" src="images/03/handson/create-igw101.png" alt="インターネットゲートウェイの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-igw1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-igw1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-igw1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-igw1', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-igw1',
+                  pageCount: 1,
+                  imgId: 'create-igw1-slide-img',
+                  counterId: 'create-igw1-counter',
+                  indicatorsId: 'create-igw1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">インターネットゲートウェイ作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">名前（例: <code>my-igw-xx</code>）を入力して、「インターネットゲートウェイの作成」をクリックして作成します。</p>
+
+              <!-- インターネットゲートウェイ作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-igw2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-igw2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-igw2-slide-img" src="images/03/handson/create-igw201.png" alt="インターネットゲートウェイの作成 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-igw2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-igw2-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-igw2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-igw2', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-igw2',
+                  pageCount: 2,
+                  imgId: 'create-igw2-slide-img',
+                  counterId: 'create-igw2-counter',
+                  indicatorsId: 'create-igw2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">VPCアタッチ画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">作成後、アクションから 「VPC にアタッチ」 を選択し、アタッチ画面を開きます。</p>
+
+              <!-- インターネットゲートウェイ作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-igw3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-igw3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-igw3-slide-img" src="images/03/handson/create-igw301.png" alt="インターネットゲートウェイの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-igw3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-igw3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-igw3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-igw3', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-igw3',
+                  pageCount: 1,
+                  imgId: 'create-igw3-slide-img',
+                  counterId: 'create-igw3-counter',
+                  indicatorsId: 'create-igw3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">VPCにアタッチ</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">自身のVPCを選択し、「インターネットゲートウェイのアタッチ」をクリックして紐付けます。</p>
+
+              <!-- インターネットゲートウェイ作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-igw4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-igw4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-igw4-slide-img" src="images/03/handson/create-igw401.png" alt="インターネットゲートウェイの作成 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-igw4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-igw4-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-igw4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-igw4', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-igw4',
+                  pageCount: 3,
+                  imgId: 'create-igw4-slide-img',
+                  counterId: 'create-igw4-counter',
+                  indicatorsId: 'create-igw4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">ルートテーブルの設定</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ルートテーブル作成画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左メニューの「ルートテーブル」→「ルートテーブルを作成」をクリックします。</p>
+
+              <!-- ルートテーブル作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-rt1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-rt1-slide-img" src="images/03/handson/create-rt101.png" alt="ルートテーブルの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-rt1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-rt1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-rt1', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-rt1',
+                  pageCount: 1,
+                  imgId: 'create-rt1-slide-img',
+                  counterId: 'create-rt1-counter',
+                  indicatorsId: 'create-rt1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">パブリック用ルートテーブル</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li><strong>名前:</strong> <code>public-rt-xx</code></li>
+                <li><strong>VPC:</strong> 自分のVPCを選択して作成します。</li>
+              </ul>
+              <p class="text-paragraph" style="margin-top: 15px;">設定後、「ルートテーブルを作成」をクリックします。</p>
+
+              <!-- ルートテーブル作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-rt2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-rt2-slide-img" src="images/03/handson/create-rt201.png" alt="ルートテーブルの作成 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-rt2-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-rt2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-rt2', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-rt2',
+                  pageCount: 2,
+                  imgId: 'create-rt2-slide-img',
+                  counterId: 'create-rt2-counter',
+                  indicatorsId: 'create-rt2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">ルート編集画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">作成した <code>public-rt-xx</code> の画面にて、「ルート」タブ → 「ルートを編集」をクリックします。</p>
+
+              <!-- ルートテーブル作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-rt3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-rt3-slide-img" src="images/03/handson/create-rt301.png" alt="ルートテーブルの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-rt3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-rt3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-rt3', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-rt3',
+                  pageCount: 1,
+                  imgId: 'create-rt3-slide-img',
+                  counterId: 'create-rt3-counter',
+                  indicatorsId: 'create-rt3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">ルートの編集</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li>「ルートを追加」をクリック</li>
+                <li><strong>送信先:</strong> <code>0.0.0.0/0</code></li>
+                <li><strong>ターゲット:</strong> Internet Gateway (作成した <code>my-igw-xx</code> を選択)</li>
+              </ul>
+              <p class="text-paragraph" style="margin-top: 15px;">設定後、「変更の保存」をクリックします。</p>
+
+              <!-- ルートテーブル作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-rt4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-rt4-slide-img" src="images/03/handson/create-rt401.png" alt="ルートテーブルの作成 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-rt4-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-rt4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-rt4', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-rt4',
+                  pageCount: 3,
+                  imgId: 'create-rt4-slide-img',
+                  counterId: 'create-rt4-counter',
+                  indicatorsId: 'create-rt4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">サブネットの関連付け</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「サブネットの関連付け」タブ → 「サブネットの関連付けを編集」をクリックし、<code>public-subnet-1a</code> を選択して保存します。</p>
+
+              <!-- ルートテーブル作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-rt5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-rt5-slide-img" src="images/03/handson/create-rt501.png" alt="ルートテーブルの作成 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-rt5-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-rt5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-rt5', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-rt5',
+                  pageCount: 3,
+                  imgId: 'create-rt5-slide-img',
+                  counterId: 'create-rt5-counter',
+                  indicatorsId: 'create-rt5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">セキュリティグループの作成手順</h3>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">セキュリティグループ作成画面を開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左メニューの「セキュリティグループ」→「セキュリティグループを作成」をクリックします。</p>
+
+              <!-- セキュリティグループ作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-sg1-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-sg1-slide-img" src="images/03/handson/create-sg101.png" alt="セキュリティグループの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-sg1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-sg1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-sg1', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-sg1',
+                  pageCount: 1,
+                  imgId: 'create-sg1-slide-img',
+                  counterId: 'create-sg1-counter',
+                  indicatorsId: 'create-sg1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">基本詳細の設定</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li><strong>セキュリティグループ名:</strong> <code>SgWebXX</code></li>
+                <li><strong>説明:</strong> <code>For Web Server</code> など、用途を簡潔に記述します。</li>
+                <li><strong>VPC:</strong> 自分が作成したVPC（例: <code>my-vpc-xx</code>）を選択してください。</li>
+              </ul>
+
+              <!-- セキュリティグループ作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-sg2-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-sg2-slide-img" src="images/03/handson/create-sg201.png" alt="セキュリティグループの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-sg2-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-sg2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-sg2', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-sg2',
+                  pageCount: 1,
+                  imgId: 'create-sg2-slide-img',
+                  counterId: 'create-sg2-counter',
+                  indicatorsId: 'create-sg2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">インバウンドルールの設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「ルールを追加」をルールの追加欄分（3回）クリックして、以下のルールを追加します。</p>
+              <table class="info-table">
+                <thead>
+                  <tr>
+                    <th>タイプ</th>
+                    <th>プロトコル</th>
+                    <th>ポート範囲</th>
+                    <th>ソース（送信元）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SSH</td>
+                    <td>TCP</td>
+                    <td>22</td>
+                    <td>マイ IP</td>
+                  </tr>
+                  <tr>
+                    <td>HTTP</td>
+                    <td>TCP</td>
+                    <td>80</td>
+                    <td>Anywhere-IPv4(0.0.0.0/0)</td>
+                  </tr>
+                  <tr>
+                    <td>すべての ICMP - IPv4</td>
+                    <td>ICMP</td>
+                    <td>すべて</td>
+                    <td>Anywhere-IPv4(0.0.0.0/0)</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- セキュリティグループ作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-sg3-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-sg3-slide-img" src="images/03/handson/create-sg301.png" alt="セキュリティグループの作成 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-sg3-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-sg3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-sg3', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-sg3',
+                  pageCount: 2,
+                  imgId: 'create-sg3-slide-img',
+                  counterId: 'create-sg3-counter',
+                  indicatorsId: 'create-sg3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">アウトバウンドルールの設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">アウトバウンドルールは、デフォルトで「すべてのトラフィック / 0.0.0.0/0（すべて許可）」が設定されています。このままでOKです。</p>
+
+              <!-- セキュリティグループ作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-sg4-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-sg4-slide-img" src="images/03/handson/create-sg401.png" alt="セキュリティグループの作成 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-sg4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-sg4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-sg4', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-sg4',
+                  pageCount: 1,
+                  imgId: 'create-sg4-slide-img',
+                  counterId: 'create-sg4-counter',
+                  indicatorsId: 'create-sg4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">セキュリティグループの作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「セキュリティグループの作成」をクリックします。</p>
+
+              <!-- セキュリティグループ作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-sg5-slideshow">
+                <div class="inline-slideshow-header">
+                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-sg5-slide-img" src="images/03/handson/create-sg501.png" alt="セキュリティグループの作成 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-sg5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-sg5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-sg5', {
+                  folder: 'images/03/handson',
+                  prefix: 'create-sg5',
+                  pageCount: 2,
+                  imgId: 'create-sg5-slide-img',
+                  counterId: 'create-sg5-counter',
+                  indicatorsId: 'create-sg5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+        </div>
+      `
+    },
     // セクション: 理解度テスト
     {
       id: "3-quiz",
