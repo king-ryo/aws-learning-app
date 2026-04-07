@@ -629,7 +629,7 @@ const chapter03 = {
             <!-- 全体像 スライドショー -->
             <div class="inline-slideshow" id="handson-architecture-slideshow">
               <div class="inline-slideshow-header">
-                <h3 class="inline-slideshow-title">&#128196; 構成図</h3>
+                <p class="inline-slideshow-title">&#128196; 構成図</p>
               </div>
               <div class="inline-slideshow-body">
                 <div class="inline-slide-area">
@@ -658,7 +658,39 @@ const chapter03 = {
             </script>
           </div>
 
+          <!-- VPCの作成 -->
           <h3 class="section-subtitle">VPCの作成</h3>
+
+          <!-- VPC作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-vpc-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">VPCの立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-vpc-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-vpc-all-slide-img" src="images/03/handson/create-vpc-all01.png" alt="VPCの作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-vpc-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-vpc-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-vpc-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-vpc-all', {
+              folder: 'images/03/handson',
+              prefix: 'create-vpc-all',
+              pageCount: 1,
+              imgId: 'create-vpc-all-slide-img',
+              counterId: 'create-vpc-all-counter',
+              indicatorsId: 'create-vpc-all-indicators'
+            });
+          </script>
 
           <div class="step-container">
             <div class="step-header">
@@ -671,7 +703,7 @@ const chapter03 = {
               <!-- VPC作成手順1 スライドショー -->
               <div class="inline-slideshow" id="create-vpc1-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -712,7 +744,7 @@ const chapter03 = {
               <!-- VPC作成手順2 スライドショー -->
               <div class="inline-slideshow" id="create-vpc2-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -753,7 +785,7 @@ const chapter03 = {
               <!-- VPC作成手順3 スライドショー -->
               <div class="inline-slideshow" id="create-vpc3-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -806,7 +838,7 @@ const chapter03 = {
               <!-- VPC作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-vpc4-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -836,7 +868,39 @@ const chapter03 = {
             </div>
           </div>
 
+          <!-- サブネットの作成 -->
           <h3 class="section-subtitle">サブネットの作成</h3>
+
+          <!-- サブネット作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-subnet-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">サブネットの立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-subnet-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-subnet-all-slide-img" src="images/03/handson/create-subnet-all01.png" alt="サブネットの作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-subnet-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-subnet-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-subnet-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-subnet-all', {
+              folder: 'images/03/handson',
+              prefix: 'create-subnet-all',
+              pageCount: 1,
+              imgId: 'create-subnet-all-slide-img',
+              counterId: 'create-subnet-all-counter',
+              indicatorsId: 'create-subnet-all-indicators'
+            });
+          </script>
 
           <div class="step-container">
             <div class="step-header">
@@ -849,7 +913,7 @@ const chapter03 = {
               <!-- サブネット作成手順1 スライドショー -->
               <div class="inline-slideshow" id="create-subnet1-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -890,7 +954,7 @@ const chapter03 = {
               <!-- サブネット作成手順2 スライドショー -->
               <div class="inline-slideshow" id="create-subnet2-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -936,7 +1000,7 @@ const chapter03 = {
               <!-- サブネット作成手順3 スライドショー -->
               <div class="inline-slideshow" id="create-subnet3-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -983,7 +1047,7 @@ const chapter03 = {
               <!-- サブネット作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-subnet4-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1024,7 +1088,7 @@ const chapter03 = {
               <!-- サブネット作成手順5 スライドショー -->
               <div class="inline-slideshow" id="create-subnet5-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1054,7 +1118,39 @@ const chapter03 = {
             </div>
           </div>
 
+          <!-- インターネットゲートウェイの作成 -->
           <h3 class="section-subtitle">インターネットゲートウェイの作成</h3>
+          
+          <!-- インターネットゲートウェイ作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-igw-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">インターネットゲートウェイの立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-igw-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-igw-all-slide-img" src="images/03/handson/create-igw-all01.png" alt="インターネットゲートウェイの作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-igw-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-igw-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-igw-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-igw-all', {
+              folder: 'images/03/handson',
+              prefix: 'create-igw-all',
+              pageCount: 1,
+              imgId: 'create-igw-all-slide-img',
+              counterId: 'create-igw-all-counter',
+              indicatorsId: 'create-igw-all-indicators'
+            });
+          </script>
 
           <div class="step-container">
             <div class="step-header">
@@ -1067,7 +1163,7 @@ const chapter03 = {
               <!-- インターネットゲートウェイ作成手順1 スライドショー -->
               <div class="inline-slideshow" id="create-igw1-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1108,7 +1204,7 @@ const chapter03 = {
               <!-- インターネットゲートウェイ作成手順2 スライドショー -->
               <div class="inline-slideshow" id="create-igw2-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1149,7 +1245,7 @@ const chapter03 = {
               <!-- インターネットゲートウェイ作成手順3 スライドショー -->
               <div class="inline-slideshow" id="create-igw3-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1190,7 +1286,7 @@ const chapter03 = {
               <!-- インターネットゲートウェイ作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-igw4-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1220,7 +1316,39 @@ const chapter03 = {
             </div>
           </div>
 
+          <!-- ルートテーブルの作成手順 -->
           <h3 class="section-subtitle">ルートテーブルの設定</h3>
+          
+          <!-- ルートテーブル作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-rt-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">ルートテーブルの立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-rt-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-rt-all-slide-img" src="images/03/handson/create-rt-all01.png" alt="ルートテーブルの作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-rt-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-rt-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-rt-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-rt-all', {
+              folder: 'images/03/handson',
+              prefix: 'create-rt-all',
+              pageCount: 1,
+              imgId: 'create-rt-all-slide-img',
+              counterId: 'create-rt-all-counter',
+              indicatorsId: 'create-rt-all-indicators'
+            });
+          </script>
 
           <div class="step-container">
             <div class="step-header">
@@ -1233,7 +1361,7 @@ const chapter03 = {
               <!-- ルートテーブル作成手順1 スライドショー -->
               <div class="inline-slideshow" id="create-rt1-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1278,7 +1406,7 @@ const chapter03 = {
               <!-- ルートテーブル作成手順2 スライドショー -->
               <div class="inline-slideshow" id="create-rt2-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1319,7 +1447,7 @@ const chapter03 = {
               <!-- ルートテーブル作成手順3 スライドショー -->
               <div class="inline-slideshow" id="create-rt3-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1366,7 +1494,7 @@ const chapter03 = {
               <!-- ルートテーブル作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-rt4-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1407,7 +1535,7 @@ const chapter03 = {
               <!-- ルートテーブル作成手順5 スライドショー -->
               <div class="inline-slideshow" id="create-rt5-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1437,7 +1565,39 @@ const chapter03 = {
             </div>
           </div>
 
+          <!-- セキュリティグループの作成手順 -->
           <h3 class="section-subtitle">セキュリティグループの作成手順</h3>
+          
+          <!-- セキュリティグループ作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-sg-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">セキュリティグループの立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-sg-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-sg-all-slide-img" src="images/03/handson/create-sg-all01.png" alt="セキュリティグループの作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-sg-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-sg-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-sg-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-sg-all', {
+              folder: 'images/03/handson',
+              prefix: 'create-sg-all',
+              pageCount: 1,
+              imgId: 'create-sg-all-slide-img',
+              counterId: 'create-sg-all-counter',
+              indicatorsId: 'create-sg-all-indicators'
+            });
+          </script>
 
           <div class="step-container">
             <div class="step-header">
@@ -1450,7 +1610,7 @@ const chapter03 = {
               <!-- セキュリティグループ作成手順1 スライドショー -->
               <div class="inline-slideshow" id="create-sg1-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1495,7 +1655,7 @@ const chapter03 = {
               <!-- セキュリティグループ作成手順2 スライドショー -->
               <div class="inline-slideshow" id="create-sg2-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1531,6 +1691,13 @@ const chapter03 = {
               <span class="step-title">インバウンドルールの設定</span>
             </div>
             <div class="step-content">
+              <div class="info-box" style="margin-top: 10px;">
+                <div class="info-box-title">&#128161; インバウンドルールとは</div>
+                <p>
+                  外部からサーバーに対して<strong>入ってくる通信（トラフィック）</strong>を制御するためのルールです。<br>
+                  AWSのセキュリティグループでは、デフォルトですべてのインバウンド通信が拒否されているため、必要な通信（Webサイト閲覧用のHTTPや、管理用のSSHなど）だけを「許可」する設定を行います。
+                </p>
+              </div>
               <p class="text-paragraph">「ルールを追加」をルールの追加欄分（3回）クリックして、以下のルールを追加します。</p>
               <table class="info-table">
                 <thead>
@@ -1566,7 +1733,7 @@ const chapter03 = {
               <!-- セキュリティグループ作成手順3 スライドショー -->
               <div class="inline-slideshow" id="create-sg3-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1602,12 +1769,19 @@ const chapter03 = {
               <span class="step-title">アウトバウンドルールの設定</span>
             </div>
             <div class="step-content">
+              <div class="info-box" style="margin-top: 10px;">
+                <div class="info-box-title">&#128161; アウトバウンドルールとは</div>
+                <p>
+                  サーバー内部から外部ネットワークへ向けて<strong>出ていく通信（トラフィック）</strong>を制御するためのルールです。<br>
+                  AWSのセキュリティグループでは、デフォルトですべてのアウトバウンド通信が「許可」されています。これにより、サーバーが外部のパッケージ取得やAPI通信などを自由に行えるようになっています。通常はこのままで問題ありません。
+                </p>
+              </div>
               <p class="text-paragraph">アウトバウンドルールは、デフォルトで「すべてのトラフィック / 0.0.0.0/0（すべて許可）」が設定されています。このままでOKです。</p>
 
               <!-- セキュリティグループ作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-sg4-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
@@ -1648,7 +1822,7 @@ const chapter03 = {
               <!-- セキュリティグループ作成手順5 スライドショー -->
               <div class="inline-slideshow" id="create-sg5-slideshow">
                 <div class="inline-slideshow-header">
-                  <h3 class="inline-slideshow-title">&#128196; 画面例</h3>
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
                 </div>
                 <div class="inline-slideshow-body">
                   <div class="inline-slide-area">
