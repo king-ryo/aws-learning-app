@@ -619,6 +619,890 @@ ssh -i "my-key.pem" ec2-user@パブリックIPアドレス</div>
               <strong>SSHポートを開けずに</strong>接続できるSession Managerも利用できます。
             </p>
           </div>
+        </div>
+      `
+    },
+    // ハンズオン1: EC2インスタンスを作成・起動する
+    {
+      id: "4-handson1",
+      title: "ハンズオン1：EC2インスタンスを作成・起動する",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン1：EC2インスタンスを作成・起動する</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> AWSマネジメントコンソール</li>
+              <li><strong>ゴール：</strong> コンテナを実行するためのEC2インスタンスを作成し、起動する。</li>
+            </ul>
+          </div>
+
+          <!-- EC2作成全体像 スライドショー -->
+          <div class="inline-slideshow" id="create-ec2-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">EC2の立ち位置</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="create-ec2-all-slide-img" src="images/04/handson/create-ec2-all01.png" alt="EC2の作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="create-ec2-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="create-ec2-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('create-ec2-all', {
+              folder: 'images/04/handson',
+              prefix: 'create-ec2-all',
+              pageCount: 1,
+              imgId: 'create-ec2-all-slide-img',
+              counterId: 'create-ec2-all-counter',
+              indicatorsId: 'create-ec2-all-indicators'
+            });
+          </script>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">EC2サービスを開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">コンソールの上部の検索窓に「EC2」と入力し、サービス一覧から「EC2」を選択してダッシュボードを開きます。</p>
+              
+              <!-- EC2作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-1-slide-img" src="images/04/handson/create-ec2-101.png" alt="EC2サービスを開く 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-1-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-1', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-1',
+                  pageCount: 2,
+                  imgId: 'create-ec2-1-slide-img',
+                  counterId: 'create-ec2-1-counter',
+                  indicatorsId: 'create-ec2-1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">インスタンスの起動開始</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">左側のメニューの「インスタンス」から「インスタンスを起動」をクリックします。</p>
+
+              <!-- EC2作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-2-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-2-slide-img" src="images/04/handson/create-ec2-201.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-2-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-2', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-2',
+                  pageCount: 1,
+                  imgId: 'create-ec2-2-slide-img',
+                  counterId: 'create-ec2-2-counter',
+                  indicatorsId: 'create-ec2-2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">名前の設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">インスタンスの名前（例: <code>myapp-server-xx</code>）を入力します。</p>
+              
+              <!-- EC2作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-3-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-3-slide-img" src="images/04/handson/create-ec2-301.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-3', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-3',
+                  pageCount: 1,
+                  imgId: 'create-ec2-3-slide-img',
+                  counterId: 'create-ec2-3-counter',
+                  indicatorsId: 'create-ec2-3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">AMIの選択</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「Amazon Linux」を選択し、Amazon マシンイメージ（AMI）で「Amazon Linux 2023 AMI（無料利用枠の対象）」を選択します。</p>
+
+              <!-- EC2作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-4-slide-img" src="images/04/handson/create-ec2-401.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-4', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-4',
+                  pageCount: 1,
+                  imgId: 'create-ec2-4-slide-img',
+                  counterId: 'create-ec2-4-counter',
+                  indicatorsId: 'create-ec2-4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">インスタンスタイプの選択</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「t2.micro（無料利用枠の対象）」を選択します。</p>
+
+              <!-- EC2作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-5-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-5-slide-img" src="images/04/handson/create-ec2-501.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-5-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-5', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-5',
+                  pageCount: 1,
+                  imgId: 'create-ec2-5-slide-img',
+                  counterId: 'create-ec2-5-counter',
+                  indicatorsId: 'create-ec2-5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">6</span>
+              <span class="step-title">キーペアの作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「新しいキーペアの作成」をクリックし、以下を設定します。</p>
+              <ul class="feature-list">
+                <li><strong>キーペア名:</strong> <code>myapp-key-xx</code></li>
+                <li><strong>キーペアのタイプ:</strong> <code>RSA</code></li>
+                <li><strong>キーペアの形式:</strong> <code>.pem</code></li>
+              </ul>
+
+              <div class="info-box" style="margin-top: 15px;">
+                <div class="info-box-title">&#128269; キーペアのタイプ（RSA vs ED25519）</div>
+                <ul class="feature-list" style="margin-top: 8px;">
+                  <li><strong>RSA:</strong> 最も一般的な暗号方式で、ほぼすべてのシステムで使えます（今回はこちらを選択）。</li>
+                  <li><strong>ED25519:</strong> RSAよりも高速で安全性が高い最新の方式です。一部の古いOSでは使えない場合があります。</li>
+                </ul>
+              </div>
+              <p class="text-paragraph">「キーペアを作成」を押すとファイルがダウンロードされます。<strong>再発行できないので大切に保管してください。</strong></p>
+
+              <!-- EC2作成手順6 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-6-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-6" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-6-slide-img" src="images/04/handson/create-ec2-601.png" alt="EC2サービスを開く 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-6" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-6-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-6-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-6', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-6',
+                  pageCount: 2,
+                  imgId: 'create-ec2-6-slide-img',
+                  counterId: 'create-ec2-6-counter',
+                  indicatorsId: 'create-ec2-6-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">7</span>
+              <span class="step-title">ネットワーク設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">「編集」ボタンをクリックして、以下の設定を書き換えます。</p>
+
+              <ul class="feature-list">
+                <li><strong>VPC:</strong> デフォルトではなく、自分が作成したVPC (<code>my-vpc-XX</code>) を選択。</li>
+                <li><strong>サブネット:</strong> <strong>Public</strong> Subnet (<code>public-subnet-XX</code>) を選択。</li>
+                <li><strong>パブリックIPの自動割り当て:</strong> 有効化</li>
+                <li><strong>ファイアウォール（セキュリティグループ）:</strong> 既存のセキュリティグループを選択する</li>
+                <li><strong>共通のセキュリティグループ:</strong> <code>SgWebXX</code></li>
+              </ul>
+
+              <!-- EC2作成手順7 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-7-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-7" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-7-slide-img" src="images/04/handson/create-ec2-701.png" alt="EC2サービスを開く 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-7" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-7-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-7-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-7', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-7',
+                  pageCount: 2,
+                  imgId: 'create-ec2-7-slide-img',
+                  counterId: 'create-ec2-7-counter',
+                  indicatorsId: 'create-ec2-7-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">8</span>
+              <span class="step-title">ストレージの設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">デフォルトの <strong>8 GiB (gp3)</strong> のままでOKです。</p>
+
+              <!-- EC2作成手順8 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-8-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-8" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-8-slide-img" src="images/04/handson/create-ec2-801.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-8" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-8-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-8-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-8', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-8',
+                  pageCount: 1,
+                  imgId: 'create-ec2-8-slide-img',
+                  counterId: 'create-ec2-8-counter',
+                  indicatorsId: 'create-ec2-8-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">9</span>
+              <span class="step-title">起動の確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">画面右側の「インスタンスを起動」をクリックし、ステータスが「実行中 (running)」になるまで待ちます。</p>
+
+              <!-- EC2作成手順9 スライドショー -->
+              <div class="inline-slideshow" id="create-ec2-9-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ec2-9" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ec2-9-slide-img" src="images/04/handson/create-ec2-901.png" alt="EC2サービスを開く 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ec2-9" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ec2-9-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ec2-9-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ec2-9', {
+                  folder: 'images/04/handson',
+                  prefix: 'create-ec2-9',
+                  pageCount: 3,
+                  imgId: 'create-ec2-9-slide-img',
+                  counterId: 'create-ec2-9-counter',
+                  indicatorsId: 'create-ec2-9-indicators'
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン2: EC2インスタンスにSSH接続する
+    {
+      id: "4-handson2",
+      title: "ハンズオン2：EC2インスタンスにSSH接続する",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン2：EC2インスタンスにSSH接続する</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> AWSマネジメントコンソール ＆ ローカル（Macのターミナル）</li>
+              <li><strong>ゴール：</strong> 起動したEC2インスタンスに、ダウンロードしたキーペアを使って安全にSSH接続する。</li>
+            </ul>
+          </div>
+
+          <!-- EC2接続全体像 スライドショー -->
+          <div class="inline-slideshow" id="connect-ec2-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">EC2への接続イメージ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="connect-ec2-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="connect-ec2-all-slide-img" src="images/04/handson/connect-ec2-all01.png" alt="EC2接続続 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="connect-ec2-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="connect-ec2-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="connect-ec2-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('connect-ec2-all', {
+              folder: 'images/04/handson',
+              prefix: 'connect-ec2-all',
+              pageCount: 1,
+              imgId: 'connect-ec2-all-slide-img',
+              counterId: 'connect-ec2-all-counter',
+              indicatorsId: 'connect-ec2-all-indicators'
+            });
+          </script>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">IPアドレスの確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【AWSマネジメントコンソール】</strong></p>
+              <p class="text-paragraph">左側のメニューの「インスタンス」からインスタンス一覧を開き、前のセクションで作成したEC2インスタンスを選択します。</p>
+              <p class="text-paragraph">詳細タブにある <strong>「パブリック IPv4 アドレス」</strong> をコピーしてメモしておきます（例: 54.xxx.xxx.xxx）。</p>
+
+              <div class="info-box" style="margin-top: 15px;">
+                <div class="info-box-title">&#128161; パブリックIPアドレスに関する注意</div>
+                <p>
+                  このパブリックIPアドレスは、<strong>インスタンスを一度停止（ストップ）して再起動すると新しいIPアドレスが再割り当てされるため、値が変わります。</strong><br>
+                  後日改めて起動して接続する場合は、再度コンソールから新しいIPアドレスを確認するようにしてください。（※IPアドレスを固定する「Elastic IP」という機能もありますが、本ハンズオンでは使用しません）
+                </p>
+              </div>
+
+              <!-- EC2接続手順1 スライドショー -->
+              <div class="inline-slideshow" id="connect-ec2-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="connect-ec2-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="connect-ec2-1-slide-img" src="images/04/handson/connect-ec2-101.png" alt="EC2サービスを開く 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="connect-ec2-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="connect-ec2-1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="connect-ec2-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('connect-ec2-1', {
+                  folder: 'images/04/handson',
+                  prefix: 'connect-ec2-1',
+                  pageCount: 1,
+                  imgId: 'connect-ec2-1-slide-img',
+                  counterId: 'connect-ec2-1-counter',
+                  indicatorsId: 'connect-ec2-1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">ディレクトリの移動</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong>Macのターミナルを開き、キーペア（<code>.pem</code>）をダウンロードしたディレクトリに移動します。（Downloadsフォルダに保存した場合）</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ~/Downloads</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">権限の変更</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong>秘密鍵の権限が広すぎると接続が拒否されるため、以下のコマンドで自分だけが読み取れるようにパーミッションを変更します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>chmod 400 myapp-key-XX.pem</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">SSH接続</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong>以下のコマンドを実行して、EC2インスタンスに接続します。(IPアドレスはご自身で取得したものに置き換えてください)</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>ssh -i "myapp-key-XX.pem" ec2-user@54.xxx.xxx.xxx</div>
+
+              <div class="info-box" style="margin: 15px 0;">
+                <div class="info-box-title">&#128269; sshコマンドの構文</div>
+                <p>このコマンドは、以下のような意味で組み立てられています。</p>
+                <ul class="feature-list" style="margin-top: 8px;">
+                  <li><code>ssh</code>：サーバーに安全に遠隔接続するためのコマンド</li>
+                  <li><code>-i "xxx.pem"</code>：[オプション] ログインするための鍵（身分証）ファイル</li>
+                  <li><code>ec2-user</code>：接続先のサーバーのユーザー名（Amazon Linuxのデフォルトユーザー）</li>
+                  <li><code>@[IPアドレス]</code>：接続先のサーバーのIPアドレス（住所）</li>
+                </ul>
+              </div>
+
+              <p class="text-paragraph">初回接続時に「<code>Are you sure you want to continue connecting (yes/no/[fingerprint])?</code>」と聞かれたら <code>yes</code> と入力してEnterを押します。</p>
+
+              <!-- EC2接続手順4 スライドショー -->
+              <div class="inline-slideshow" id="connect-ec2-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="connect-ec2-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="connect-ec2-4-slide-img" src="images/04/handson/connect-ec2-401.png" alt="EC2にSSH接続する 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="connect-ec2-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="connect-ec2-4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="connect-ec2-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('connect-ec2-4', {
+                  folder: 'images/04/handson',
+                  prefix: 'connect-ec2-4',
+                  pageCount: 1,
+                  imgId: 'connect-ec2-4-slide-img',
+                  counterId: 'connect-ec2-4-counter',
+                  indicatorsId: 'connect-ec2-4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">接続の確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong>画面に 「Amazon Linux 2023」 のロゴが表示され、プロンプトが <code>[ec2-user@ip-xxx-xxx-xxx-xxx ~]$</code> のように変われば、接続成功です。</p>
+
+              <!-- EC2接続手順5 スライドショー -->
+              <div class="inline-slideshow" id="connect-ec2-5-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="connect-ec2-5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="connect-ec2-5-slide-img" src="images/04/handson/connect-ec2-501.png" alt="EC2にSSH接続する 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="connect-ec2-5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="connect-ec2-5-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="connect-ec2-5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('connect-ec2-5', {
+                  folder: 'images/04/handson',
+                  prefix: 'connect-ec2-5',
+                  pageCount: 1,
+                  imgId: 'connect-ec2-5-slide-img',
+                  counterId: 'connect-ec2-5-counter',
+                  indicatorsId: 'connect-ec2-5-indicators'
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン3: ターミナルからEC2へファイルを転送する
+    {
+      id: "4-handson3",
+      title: "ハンズオン3：ターミナルからEC2へファイルを転送する",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン3：ターミナルからEC2へファイルを転送する</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> ローカル（Macのターミナル） ＆ EC2上</li>
+              <li><strong>ゴール：</strong> Macのローカル環境からEC2インスタンスへ、<code>scp</code>コマンドを使って安全にファイルを転送する。</li>
+            </ul>
+          </div>
+
+
+          <!-- EC2送信全体像 スライドショー -->
+          <div class="inline-slideshow" id="transfer-ec2-all-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">EC2へのファイル転送イメージ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="transfer-ec2-all" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="transfer-ec2-all-slide-img" src="images/04/handson/transfer-ec2-all01.png" alt="EC2の作成 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="transfer-ec2-all" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="transfer-ec2-all-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="transfer-ec2-all-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('transfer-ec2-all', {
+              folder: 'images/04/handson',
+              prefix: 'transfer-ec2-all',
+              pageCount: 1,
+              imgId: 'transfer-ec2-all-slide-img',
+              counterId: 'transfer-ec2-all-counter',
+              indicatorsId: 'transfer-ec2-all-indicators'
+            });
+          </script>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">新しいターミナルを開く</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> ハンズオン2でSSH接続しているターミナルとは<strong>別の新しいターミナルタブ（またはウィンドウ）</strong>を開きます。</p>
+            </div>
+          </div>
+
+          
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">ディレクトリの移動</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> キーペアがあるディレクトリに移動します（例： <code>cd ~/Downloads</code>）。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">テストファイルの作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> 転送するためのテストファイルを作成します。以下のコマンドを実行してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>echo "Hello AWS! by Taro" &gt; hello.txt</div>
+              <p class="text-paragraph">以下のコマンドでファイルの中身を確認できます。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cat hello.txt</div>
+
+              
+              <!-- EC2送信手順3 スライドショー -->
+              <div class="inline-slideshow" id="transfer-ec2-3-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="transfer-ec2-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="transfer-ec2-3-slide-img" src="images/04/handson/transfer-ec2-301.png" alt="EC2にSSH接続する 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="transfer-ec2-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="transfer-ec2-3-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="transfer-ec2-3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('transfer-ec2-3', {
+                  folder: 'images/04/handson',
+                  prefix: 'transfer-ec2-3',
+                  pageCount: 1,
+                  imgId: 'transfer-ec2-3-slide-img',
+                  counterId: 'transfer-ec2-3-counter',
+                  indicatorsId: 'transfer-ec2-3-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">scpコマンドの実行</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> <code>scp</code> コマンドを実行して、テストファイルをEC2へ転送します。(54.xxx.xxx.xxxの部分はご自身のEC2のIPアドレスに置き換えてください)</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>scp -i "myapp-key-XX.pem" hello.txt ec2-user@54.xxx.xxx.xxx:~/</div>
+
+              <div class="info-box" style="margin: 15px 0;">
+                <div class="info-box-title">&#128269; scpコマンドの構文</div>
+                <p>このコマンドは、以下のような構造になっています。</p>
+                <ul class="feature-list" style="margin-top: 8px;">
+                  <li><code>scp</code>：ネットワーク越しにファイルを安全にコピー（Secure Copy）するコマンド</li>
+                  <li><code>-i "xxx.pem"</code>：[オプション] 認証用の鍵ファイル</li>
+                  <li><code>hello.txt</code>：<strong>送信元</strong>（ローカル側）のファイルパス</li>
+                  <li><code>ec2-user@...</code>：<strong>送信先</strong>のユーザー名とサーバーのIPアドレス</li>
+                  <li><code>:~/</code>：送信先のどこのディレクトリに置くか（<code>~/</code> はec2-userのホームディレクトリ）</li>
+                </ul>
+              </div>
+
+              <!-- EC2送信手順4 スライドショー -->
+              <div class="inline-slideshow" id="transfer-ec2-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="transfer-ec2-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="transfer-ec2-4-slide-img" src="images/04/handson/transfer-ec2-401.png" alt="EC2にSSH接続する 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="transfer-ec2-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="transfer-ec2-4-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="transfer-ec2-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('transfer-ec2-4', {
+                  folder: 'images/04/handson',
+                  prefix: 'transfer-ec2-4',
+                  pageCount: 1,
+                  imgId: 'transfer-ec2-4-slide-img',
+                  counterId: 'transfer-ec2-4-counter',
+                  indicatorsId: 'transfer-ec2-4-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">EC2ターミナルへの移動</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> ハンズオン2でSSH接続したままになっているEC2のターミナル画面に戻ります。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">6</span>
+              <span class="step-title">転送の確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> 以下のコマンドを実行し、ファイルが転送されているか確認します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>ls</div>
+              <p class="text-paragraph">中身を確認します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cat hello.txt</div>
+              <p class="text-paragraph">「Hello AWS!」と表示されれば成功です。</p>
+
+              <!-- EC2送信手順6 スライドショー -->
+              <div class="inline-slideshow" id="transfer-ec2-6-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="transfer-ec2-6" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="transfer-ec2-6-slide-img" src="images/04/handson/transfer-ec2-601.png" alt="EC2にSSH接続する 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="transfer-ec2-6" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="transfer-ec2-6-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="transfer-ec2-6-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('transfer-ec2-6', {
+                  folder: 'images/04/handson',
+                  prefix: 'transfer-ec2-6',
+                  pageCount: 1,
+                  imgId: 'transfer-ec2-6-slide-img',
+                  counterId: 'transfer-ec2-6-counter',
+                  indicatorsId: 'transfer-ec2-6-indicators'
+                });
+              </script>
+            </div>
+          </div>
+          
 
           <div class="summary-box">
             <h3 class="summary-title">&#128203; 第4章のまとめ</h3>
