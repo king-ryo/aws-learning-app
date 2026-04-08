@@ -665,6 +665,11 @@ const chapter06 = {
             <div class="step-content">
               <p class="text-paragraph"><strong>「ACL無効」</strong>を選択します。</p>
 
+              <div class="info-box" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="info-box-title">&#128161; ACLとは？なぜ無効にするの？</div>
+                <p style="margin-top: 10px; margin-bottom: 0;"><strong>ACL（アクセスコントロールリスト）</strong>は、バケットやファイルごとにアクセス権限を設定するレガシー（古い）な仕組みです。現在AWSでは、より安全で管理しやすい「IAMポリシー」や「バケットポリシー」での一元管理を強く推奨しています。そのため、特別な理由がない限り「ACL無効」を選択し、古い仕組みを使わない設定にするのが現在のベストプラクティスです。</p>
+              </div>
+
               <!-- S3バケット作成手順4 スライドショー -->
               <div class="inline-slideshow" id="create-s3-4-slideshow">
                 <div class="inline-slideshow-header">
@@ -746,6 +751,11 @@ const chapter06 = {
             </div>
             <div class="step-content">
               <p class="text-paragraph">「バケットのバージョニング」の<strong>「無効にする」</strong>を選択します。</p>
+
+              <div class="info-box" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="info-box-title">&#128161; なぜ無効にするの？</div>
+                <p style="margin-top: 10px; margin-bottom: 0;">バージョニングを有効にすると、ファイルを上書きしても過去のバージョンがすべて保存されます。誤操作からの復旧には便利ですが、<strong>過去のバージョンもすべてストレージ容量として課金対象</strong>となるため、学習・テスト目的の場合は「無効」にしてコストを節約するのがおすすめです。</p>
+              </div>
 
               <!-- S3バケット作成手順6 スライドショー -->
               <div class="inline-slideshow" id="create-s3-6-slideshow">
