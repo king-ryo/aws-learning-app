@@ -261,18 +261,12 @@ const chapter07 = {
             <ul>
                 <li><strong>Push時のスキャン：</strong> イメージをアップロードした瞬間に自動チェックする設定が可能です。</li>
             </ul>
-            <div style="text-align: center; margin: var(--space-lg) 0;">
-              <img src="images/07/vulnerability_scan.png" alt="脆弱性スキャン" style="max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-            </div>
           </div>
 
           <div class="term-box">
             <div class="term-box-title">&#9851; ライフサイクルポリシー</div>
             <p>コンテナイメージは開発を進めるごとにどんどん溜まっていき、放置するとストレージ料金（S3と同じ従量課金）が膨らんでしまいます。<br>
             <strong>ライフサイクルポリシー</strong>を設定すると、「タグがついていない古いイメージは14日後に削除する」「最新の30個だけを残して後は削除する」といった<strong>自動お掃除ルール</strong>を適用でき、コストを最適化できます。</p>
-            <div style="text-align: center; margin: var(--space-lg) 0;">
-              <img src="images/07/lifecycle_policy.png" alt="ライフサイクルポリシー" style="max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-            </div>
           </div>
         </div>
       `
@@ -410,6 +404,689 @@ const chapter07 = {
                 <li><a href="https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/image-scanning.html" target="_blank" rel="noopener">イメージのスキャン（脆弱性スキャン）</a></li>
                 <li><a href="https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/LifecyclePolicies.html" target="_blank" rel="noopener">ライフサイクルポリシーを使用したイメージの自動クリーンアップ</a></li>
             </ul>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン1: （準備）プロジェクト作成
+    {
+      id: "7-handson1",
+      title: "ハンズオン1：（準備）プロジェクト作成",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン1：（準備）プロジェクト作成</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> ローカル（Macのターミナル / エディタ）</li>
+              <li><strong>ゴール：</strong> Docker化するためのReact（フロントエンド）とSpring Boot（バックエンド）のプロジェクトを作成する。</li>
+            </ul>
+          </div>
+
+          <p class="text-paragraph">
+            このステップでは、推奨されるフォルダ構成に沿って、React（フロントエンド）、Spring Boot（バックエンド）、およびMySQL（データベース）の土台を作り、それぞれが連携できるようにコードを記述していきます。
+          </p>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">フォルダ構成のベースを作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">まずは、プロジェクト全体をまとめる親フォルダと、各機能ごとのサブフォルダを作成します。</p>
+              <p class="text-paragraph">ターミナル（またはコマンドプロンプト）を開き、以下のコマンドを実行してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 親フォルダの作成と移動
+mkdir myapp
+cd myapp
+
+# サブフォルダの作成
+mkdir frontend backend deploy mysql</div>
+              <p class="text-paragraph">これで、以下の構成ができます。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>myapp/
+ ├─ frontend/  (後でReactプロジェクトを作成)
+ ├─ backend/   (後でSpring Bootプロジェクトを作成)
+ ├─ deploy/    (Docker Compose用)
+ └─ mysql/     (DB初期化用)</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">MySQL（データベース）の初期化SQLを作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">MySQLコンテナが起動した際に、自動でテーブル作成と初期データの投入が行われるように <code>init.sql</code> を準備します。</p>
+              <p class="text-paragraph"><code>myapp/mysql/</code> フォルダ内に <code>init.sql</code> というファイルを作成し、以下の内容を記述して保存してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>-- データベースの作成と選択
+CREATE DATABASE IF NOT EXISTS sampledb;
+USE sampledb;
+
+-- テーブルの作成
+CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content VARCHAR(255) NOT NULL
+);
+
+-- 初期データの投入
+INSERT INTO messages (content) VALUES ('Hello from MySQL!');
+INSERT INTO messages (content) VALUES ('Spring Boot connection successful!');</div>
+            </div>
+          </div>
+
+          <!-- Spring Boot（バックエンド）の作成 -->
+          <h3 class="section-subtitle">Spring Boot（バックエンド）の作成</h3>
+          <p class="text-paragraph">Spring Bootで、データベースからデータを取得してReactに返すAPI（<code>http://localhost:8080/api/messages</code>）を作成します。</p>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">プロジェクトの生成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> にアクセスし、以下の設定でプロジェクトを生成します。</p>
+              <ul class="feature-list">
+                <li><strong>Project</strong>: Gradle</li>
+                <li><strong>Language</strong>: Java</li>
+                <li><strong>Spring Boot</strong>: 3.x.x または 4.x.x (最新の安定版)</li>
+                <li><strong>Metadata</strong>:
+                  <ul class="feature-list">
+                    <li>Group: <code>com.example</code></li>
+                    <li>Artifact: <code>backend</code></li>
+                  </ul>
+                </li>
+                <li><strong>Packaging</strong>: Jar</li>
+                <li><strong>Java</strong>: 21</li>
+                <li><strong>Dependencies (依存関係)</strong>:
+                  <ul>
+                    <li>Spring Web (API作成用)</li>
+                    <li>Spring Data JPA (データベース操作用)</li>
+                    <li>MySQL Driver (MySQL接続用)</li>
+                  </ul>
+                </li>
+              </ul>
+              <p class="text-paragraph">生成されたZIPファイルをダウンロードして解凍し、中身をすべて先ほど作成した <code>myapp/backend/</code> フォルダ内に移動してください。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">データベース接続設定 (application.properties)</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><code>backend/src/main/resources/application.properties</code> を開き、以下の内容を記述します。<br>ここでのポイントは、接続先を <code>localhost</code> ではなく、後ほどDocker Composeで定義するサービス名である <code>db</code> にすることです。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 接続先はコンテナのサービス名 'db' を指定
+spring.datasource.url=jdbc:mysql://db:3306/sampledb
+spring.datasource.username=root
+spring.datasource.password=password
+
+# Hibernateの設定（テーブルを自動更新）
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">Javaコードの作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><code>backend/src/main/java/com/example/backend/</code> フォルダ配下に、以下の3つのファイルを作成（または追記）します。</p>
+              
+              <p class="text-paragraph"><strong>Entityクラス (データベースのテーブルと紐づくクラス)</strong></p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>// Message.java
+package com.example.backend;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "messages")
+public class Message {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String content;
+
+    // Getter / Setter
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
+}</div>
+
+              <p class="text-paragraph"><strong>Repositoryインターフェース (データベース操作用)</strong></p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>// MessageRepository.java
+package com.example.backend;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MessageRepository extends JpaRepository&lt;Message, Integer&gt; {
+}</div>
+
+              <p class="text-paragraph"><strong>Controllerクラス (APIの窓口)</strong></p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>// MessageController.java
+package com.example.backend;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/messages")
+@CrossOrigin(origins = "*") // Reactからのアクセスを許可
+public class MessageController {
+
+    private final MessageRepository repository;
+
+    public MessageController(MessageRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping
+    public List&lt;Message&gt; getMessages() {
+        return repository.findAll();
+    }
+}</div>
+            </div>
+          </div>
+
+          <!-- React（フロントエンド）の作成 -->
+          <h3 class="section-subtitle">React（フロントエンド）の作成</h3>
+          <p class="text-paragraph">Viteを使ってReactプロジェクトを作成し、Spring BootのAPIを呼び出して画面に表示する処理を書きます。</p>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">プロジェクトの生成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><code>myapp/</code> フォルダにいる状態で、以下のコマンドを実行します。（すでに空の <code>frontend</code> フォルダがあるため、その中にViteのファイルを展開します）</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># frontendディレクトリの中身を作成
+cd frontend
+npm create vite@latest . -- --template react
+
+# 依存パッケージのインストール
+npm install</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">API呼び出し処理の追加 (App.jsx)</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><code>frontend/src/App.jsx</code> を開き、以下の内容に丸ごと書き換えます。<br>ブラウザからAPIを叩くため、アクセス先は <code>http://localhost:8080</code> となります。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>import { useEffect, useState } from 'react'
+import './App.css'
+
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    // Spring BootのAPIエンドポイントを呼び出す
+    fetch('http://localhost:8080/api/messages')
+      .then((res) =&gt; {
+        if (!res.ok) throw new Error('ネットワークエラーが発生しました');
+        return res.json();
+      })
+      .then((data) =&gt; setMessages(data))
+      .catch((err) =&gt; setError(err.message));
+  }, []);
+
+  return (
+    &lt;div className="App"&gt;
+      &lt;h1&gt;React + Spring Boot + MySQL&lt;/h1&gt;
+      &lt;h2&gt;メッセージリスト&lt;/h2&gt;
+      {error && &lt;p style={{ color: 'red' }}&gt;エラー: {error}&lt;/p&gt;}
+      &lt;ul&gt;
+        {messages.map((msg) =&gt; (
+          &lt;li key={msg.id}&gt;{msg.content}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default App</div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン2: （準備）Dockerを使ってローカルで動作確認
+    {
+      id: "7-handson2",
+      title: "ハンズオン2：（準備）Dockerを使ってローカルで動作確認",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン2：（準備）Dockerを使ってローカルで動作確認</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> ローカル（Macのターミナル / エディタ）</li>
+              <li><strong>ゴール：</strong> AWSにデプロイする前に、ローカル環境で3層構成が動くことを確認する。</li>
+            </ul>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">React用のDockerfileを作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">Reactは開発用サーバーのまま公開するのではなく、buildした静的ファイルをNginxで配信する形がわかりやすいです。以下の手順で、Node.jsでbuildし、そのbuild結果をNginxコンテナにコピーする設定を書きます。</p>
+              <p class="text-paragraph"><code>myapp/frontend/</code> フォルダ内に <code>Dockerfile</code>（拡張子なし）を作成し、以下の内容を記述します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 1. ビルド環境 (Node.js)
+FROM node:22 AS build
+WORKDIR /app
+# パッケージ情報を先にコピーしてインストール
+COPY package*.json ./
+RUN npm install
+# ソースコードをコピーしてビルド
+COPY . .
+RUN npm run build
+
+# 2. 実行環境 (Nginx)
+FROM nginx:alpine
+# ビルドした静的ファイルをNginxの配信フォルダにコピー
+COPY --from=build /app/dist /usr/share/nginx/html
+# 80番ポートで配信する
+EXPOSE 80</div>
+              <p class="text-paragraph">これにより、EC2でもNginxコンテナが80番で配信するようになります。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">Spring Boot用のDockerfileを作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">Spring Bootはjarを作成し、コンテナ内で <code>java -jar</code> で起動する形にすると理解しやすいです。まずはGradleでjarを作り、そのjarをDockerfileでコピーして、8080番で起動する設定にします。</p>
+              
+              <h4 style="margin-top: 1em;">1. ローカルでjarファイルをビルドする</h4>
+              <p class="text-paragraph">ターミナルを開き、<code>myapp/backend</code> フォルダに移動して以下のコマンドを実行し、jarファイルを作成します（※Java環境が必要です。もしJava環境がない場合は、後述のDocker Compose起動時にエラーになりますが、今回はこの方法で進めます）。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ../backend
+
+# Mac/Linuxの場合
+./gradlew clean build -x test
+
+# Windowsの場合
+gradlew.bat clean build -x test</div>
+
+              <h4 style="margin-top: 1em;">2. Dockerfileの作成</h4>
+              <p class="text-paragraph"><code>myapp/backend/</code> フォルダ内に <code>Dockerfile</code> を作成し、以下の内容を記述します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 軽量なJDKイメージを使用
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
+
+# Gradleでビルドしたjarファイルをコンテナ内にコピー
+COPY build/libs/*.jar app.jar
+
+# 8080番ポートを公開
+EXPOSE 8080
+
+# jarファイルを実行
+ENTRYPOINT ["java", "-jar", "app.jar"]</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">docker-compose.yml を作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">Composeファイルでは、servicesとvolumesを定義します。MySQLはDocker Hubの公式イメージを使って起動します。データを永続化するためにvolumeを使用し、初期データ投入に <code>init.sql</code> を使います。また、MySQLの起動待ちには <code>depends_on</code> だけでなく <code>healthcheck</code> も組み合わせると安定しやすいです。</p>
+              <p class="text-paragraph"><code>myapp/deploy/</code> フォルダ内に <code>docker-compose.yml</code> を作成し、以下の内容を記述します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>services:
+  # フロントエンド (React + Nginx)
+  frontend:
+    build: ../frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # バックエンド (Spring Boot)
+  backend:
+    build: ../backend
+    ports:
+      - "8080:8080" # ローカル確認用（本番EC2では外に開けない方が安全です）
+    environment:
+      # 接続先は localhost ではなくサービス名 db を指定
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sampledb
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # データベース (MySQL)
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sampledb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # 初期化SQLをコンテナ内に配置
+      - ../mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql_data:</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">Dockerによる実行と動作確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">AWSに持っていく前に、必ずローカルPCで3つの確認を済ませます。ローカルで動かないものは、EC2に載せてもほぼ動きません。</p>
+              
+              <h4 style="margin-top: 1em;">1. コンテナの起動</h4>
+              <p class="text-paragraph">ターミナルで <code>myapp/deploy</code> フォルダに移動し、コンテナを起動します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ../deploy
+docker compose up -d --build</div>
+              <p class="text-paragraph">※ 初回はイメージのビルドとダウンロードに数分かかります。</p>
+
+              <h4 style="margin-top: 1em;">2. 動作確認</h4>
+              <p class="text-paragraph">起動が完了したら、ブラウザを開いて以下の3点を確認します。</p>
+              <ul class="feature-list">
+                <li><strong>Reactの画面が開くか:</strong> <code>http://localhost</code> にアクセスし、Reactの画面が表示されることを確認します。</li>
+                <li><strong>Spring BootのAPIが返るか:</strong> <code>http://localhost:8080/api/messages</code> にアクセスし、JSON形式のデータ（例: <code>[{"id":1,"content":"Hello from MySQL!"},...]</code>）が返ってくることを確認します。</li>
+                <li><strong>Spring BootからMySQLに接続できるか:</strong> 上記のAPIからデータが返ってきていれば、MySQLへの接続も成功しています。また、Reactの画面上にも取得したメッセージリストが表示されているはずです。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン3: ECRにコンテナイメージをプッシュする
+    {
+      id: "7-handson3",
+      title: "ハンズオン3：ECRにコンテナイメージをプッシュする",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン3：ECRにコンテナイメージをプッシュする</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> AWSマネジメントコンソール ＆ ローカル（Macのターミナル）</li>
+              <li><strong>ゴール：</strong> ECRリポジトリを作成し、ローカルでビルドしたイメージをプッシュする。</li>
+            </ul>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ECRリポジトリの作成（AWSコンソール）</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">まずはコンテナの保管庫となるリポジトリを作成します。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>AWSマネジメントコンソールにログインし、画面上部の検索バーで <strong>「ECR」</strong> と検索して「Elastic Container Registry」を開きます。</li>
+                <li>左側のメニューから「リポジトリ」を選択し、オレンジ色の <strong>「リポジトリを作成」</strong> ボタンをクリックします。</li>
+                <li>「可視性設定」で「プライベート」が選ばれていることを確認します。</li>
+                <li>「リポジトリ名」に <code>myapp-frontend</code> と入力し、画面一番下の「リポジトリを作成」を押します。これでReact用のリポジトリが1つ完成します。</li>
+                <li>まったく同じ手順でもう一度「リポジトリを作成」を開き、リポジトリ名 <code>myapp-backend</code> で作成します。これでSpring Boot用のリポジトリも完成です。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">プッシュコマンドの表示（AWSコンソール）</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">次に、ローカル環境からAWSへイメージをプッシュするための専用コマンドを確認します。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>コンソールのリポジトリ一覧画面で、作成した <code>myapp-frontend</code> の左横にあるラジオボタン（〇）にチェックを入れます。</li>
+                <li>画面右上にある <strong>「プッシュコマンドの表示」</strong> というボタンをクリックします。</li>
+                <li>画面に「1. 認証 (login)」「2. ビルド (build)」「3. タグ付け (tag)」「4. プッシュ (push)」の4つのコマンドが表示されます（お使いのOSに合わせてmacOS/LinuxかWindowsかを選択してください）。</li>
+              </ol>
+              <p class="text-paragraph">この画面を開いたまま、次のステップに進みます。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">ECRにログインする（ローカルのターミナル）</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ここからはご自身のPCのターミナル（またはコマンドプロンプト等）で作業します。現在のディレクトリが親フォルダである <code>myapp/</code> であることを確認してください。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>AWSコンソールの「プッシュコマンドの表示」画面にある <strong>1番目のコマンド（<code>aws ecr get-login-password...</code> から始まるもの）</strong> をコピーします。</li>
+                <li>ターミナルに貼り付けて実行します。</li>
+                <li><code>Login Succeeded</code> と表示されれば成功です。</li>
+              </ol>
+              <div class="info-box">
+                <div class="info-box-title">&#128161; 大事なポイント</div>
+                <p>リージョンの指定ミスは非常に多いので、ECR を作ったリージョン（例: <code>ap-northeast-1</code>）と同じ値にそろっているか確認してください。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">ローカルでbuildしてpushする（ローカルのターミナル）</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">最後に、Dockerイメージを作成（ビルド）し、ECRにアップロード（プッシュ）します。ここで<strong>ビルドコマンドのパス指定だけ修正する</strong>のがポイントです。</p>
+              
+              <h4 style="margin-top: 1em;">1. React（フロントエンド）のプッシュ</h4>
+              <p class="text-paragraph">引き続き <code>myapp-frontend</code> のプッシュコマンド画面を見ながら進めます。</p>
+              <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li><strong>ビルド:</strong> 表示されている2番目のコマンドをターミナルに貼り付けますが、一番最後の <code>.</code>（カレントディレクトリ）を <code>./frontend</code> に書き換えて実行します。<br>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-frontend ./frontend</div></li>
+                <li><strong>タグ付け:</strong> 3番目のコマンド（<code>docker tag ...</code>）をそのままコピーして実行します。</li>
+                <li><strong>プッシュ:</strong> 4番目のコマンド（<code>docker push ...</code>）をそのままコピーして実行します。</li>
+              </ul>
+
+              <h4 style="margin-top: 1em;">2. Spring Boot（バックエンド）のプッシュ</h4>
+              <p class="text-paragraph">フロントエンドが終わったら、「プッシュコマンドの表示」画面を閉じます。リポジトリ一覧から <code>myapp-backend</code> を選択し直して、再度「プッシュコマンドの表示」を開きます。</p>
+              <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li><strong>ビルド:</strong> 2番目のコマンドを貼り付け、一番最後を <code>./backend</code> に書き換えて実行します。<br>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-backend ./backend</div></li>
+                <li><strong>タグ付け:</strong> 3番目のコマンドをそのままコピーして実行します。</li>
+                <li><strong>プッシュ:</strong> 4番目のコマンドをそのままコピーして実行します。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // ハンズオン4: EC2でコンテナを起動する
+    {
+      id: "7-handson4",
+      title: "ハンズオン4：EC2でコンテナを起動する",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#128736; ハンズオン4：EC2でコンテナを起動する</h2>
+          
+          <div class="point-box">
+            <ul class="feature-list">
+              <li><strong>操作場所：</strong> ローカルターミナル（SSH接続）＆ EC2上</li>
+              <li><strong>ゴール：</strong> EC2上でECRからイメージをPullし、Docker Composeで起動して動作確認する。</li>
+            </ul>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">EC2へのSSH接続</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> MacからEC2へSSH接続します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>ssh -i "your-key.pem" ec2-user@&lt;EC2のパブリックIPまたはDNS名&gt;</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">Dockerのインストール</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> EC2にDockerとDocker Compose pluginをインストールします。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>sudo dnf update -y
+sudo dnf install -y docker
+sudo service docker start
+sudo usermod -aG docker ec2-user
+sudo dnf install -y docker-compose-plugin</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">権限の反映</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> <code>docker</code> グループへの追加を反映させるため、一度ログアウト（<code>exit</code>）して再度SSHで入り直します。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">ECRへのログイン</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> EC2側からECRにログインします。ハンズオン3のログインコマンドと同じものを実行します。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">設定ファイルの転送</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ローカル】</strong> 別のターミナルを開き、ローカルの <code>docker-compose.yml</code> と <code>.env</code> をEC2に転送します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>scp -i "your-key.pem" docker-compose.yml .env ec2-user@&lt;EC2のIP&gt;:~/myapp/deploy/</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">6</span>
+              <span class="step-title">コンテナの起動</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【EC2上】</strong> 転送したディレクトリに移動し、イメージをPullしてコンテナを起動します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>docker compose --env-file .env pull
+docker compose --env-file .env up -d</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">7</span>
+              <span class="step-title">動作確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><strong>【ブラウザ】</strong> <code>http://&lt;EC2のパブリックIP&gt;</code> にアクセスし、以下の確認を行います。</p>
+              <ul class="feature-list">
+                <li>Reactの画面が開くか</li>
+                <li>画面からAPIを呼び、Spring Bootが返るか</li>
+                <li>データ登録後にEC2上でコンテナを再起動し、MySQLのデータが残るか（volumeの確認）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    // お片付け（リソースの削除手順）
+    {
+      id: "7-cleanup",
+      title: "お片付け（リソースの削除手順）",
+      type: "explanation",
+      content: `
+        <div class="chapter-container">
+          <h2 class="section-title">&#129529; お片付け（リソースの削除手順）</h2>
+          
+          <p class="text-paragraph">
+            課金が継続するのを防ぐため、学習が終わったら以下の手順でリソースを削除します。<br>
+            <strong>操作場所：</strong> AWSマネジメントコンソール
+          </p>
+
+          <div class="warning-box">
+            <h3 class="warning-box-title">&#9888; 削除の順序と注意点</h3>
+            <p>以下の順序での削除を推奨します。また、S3は「中身（オブジェクト）を空にしないとバケットを削除できない」という重要な特徴があります。</p>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">EC2インスタンスの終了</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">EC2ダッシュボードから起動したインスタンスを選択し、「インスタンスの状態」から「インスタンスを終了」を実行します。（これによりアタッチされていたEBSボリュームもデフォルト設定であれば削除されます）。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">ECRリポジトリの削除</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ECRダッシュボードから作成したリポジトリ（frontend / backend）を選択し、削除します。</p>
+            </div>
+          </div>
+          
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">S3バケットとオブジェクトの削除</span>
+            </div>
+            <div class="step-content">
+              <ul class="feature-list">
+                <li>S3ダッシュボードから作成したバケットのリンクをクリックします。</li>
+                <li>アップロードしたファイルのチェックボックスにチェックを入れ、「削除」をクリックします。</li>
+                <li>確認画面で <code>完全に削除</code> と入力して「オブジェクトの削除」を実行します。</li>
+                <li>バケット一覧画面に戻り、バケット名を選択して「削除」をクリックします（確認画面でバケット名を入力）。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">VPCの削除</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">VPCダッシュボードから作成したVPCを選択し、削除します。（関連するサブネット、IGW、セキュリティグループ等もまとめて削除されます）。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">IAMロール/ユーザーの削除</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">学習用に作成したIAMロール（EC2に付与したもの）とIAMユーザーを削除します。</p>
+            </div>
           </div>
         </div>
       `

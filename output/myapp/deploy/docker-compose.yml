@@ -1,0 +1,39 @@
+services:
+  # フロントエンド (React + Nginx)
+  frontend:
+    build: ../frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # バックエンド (Spring Boot)
+  backend:
+    build: ../backend
+    ports:
+      - "8080:8080" # ローカル確認用（本番EC2では外に開けない方が安全です）
+    environment:
+      # 接続先は localhost ではなくサービス名 db を指定
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sampledb
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # データベース (MySQL)
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sampledb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # 初期化SQLをコンテナ内に配置
+      - ../mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql_data:
