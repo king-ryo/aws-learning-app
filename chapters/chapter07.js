@@ -831,76 +831,362 @@ docker compose up -d --build</div>
             </ul>
           </div>
 
+          <!-- ECRリポジトリの作成（AWSコンソール） -->
+          <h3 class="section-subtitle">ECRリポジトリの作成（AWSコンソール）</h3>
+          <p class="text-paragraph">まずはコンテナの保管庫となるリポジトリを作成します。</p>
+
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
-              <span class="step-title">ECRリポジトリの作成（AWSコンソール）</span>
+              <span class="step-title">ECRリポジトリサービスを開く</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">まずはコンテナの保管庫となるリポジトリを作成します。</p>
-              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
-                <li>AWSマネジメントコンソールにログインし、画面上部の検索バーで <strong>「ECR」</strong> と検索して「Elastic Container Registry」を開きます。</li>
-                <li>左側のメニューから「リポジトリ」を選択し、オレンジ色の <strong>「リポジトリを作成」</strong> ボタンをクリックします。</li>
-                <li>「可視性設定」で「プライベート」が選ばれていることを確認します。</li>
-                <li>「リポジトリ名」に <code>myapp-frontend</code> と入力し、画面一番下の「リポジトリを作成」を押します。これでReact用のリポジトリが1つ完成します。</li>
-                <li>まったく同じ手順でもう一度「リポジトリを作成」を開き、リポジトリ名 <code>myapp-backend</code> で作成します。これでSpring Boot用のリポジトリも完成です。</li>
-              </ol>
+              <p class="text-paragraph">画面上部の検索バーで <strong>「ECR」</strong> と検索して「Elastic Container Registry」を開きます。</p>
+
+              <!-- ECRリポジトリ作成手順1 スライドショー -->
+              <div class="inline-slideshow" id="create-ecr-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ecr-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ecr-1-slide-img" src="images/07/handson/create-ecr-1.png" alt="ECRリポジトリ作成手順1 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ecr-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ecr-1-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ecr-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ecr-1', {
+                  folder: 'images/07/handson',
+                  prefix: 'create-ecr-1',
+                  pageCount: 2,
+                  imgId: 'create-ecr-1-slide-img',
+                  counterId: 'create-ecr-1-counter',
+                  indicatorsId: 'create-ecr-1-indicators'
+                });
+              </script>
+
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">2</span>
-              <span class="step-title">プッシュコマンドの表示（AWSコンソール）</span>
+              <span class="step-title">ECRリポジトリ作成画面を開く</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">次に、ローカル環境からAWSへイメージをプッシュするための専用コマンドを確認します。</p>
-              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
-                <li>コンソールのリポジトリ一覧画面で、作成した <code>myapp-frontend</code> の左横にあるラジオボタン（〇）にチェックを入れます。</li>
-                <li>画面右上にある <strong>「プッシュコマンドの表示」</strong> というボタンをクリックします。</li>
-                <li>画面に「1. 認証 (login)」「2. ビルド (build)」「3. タグ付け (tag)」「4. プッシュ (push)」の4つのコマンドが表示されます（お使いのOSに合わせてmacOS/LinuxかWindowsかを選択してください）。</li>
-              </ol>
-              <p class="text-paragraph">この画面を開いたまま、次のステップに進みます。</p>
+              <p class="text-paragraph">左側のメニューから「プライベートレジストリ」 > 「リポジトリ」を選択し、オレンジ色の <strong>「リポジトリを作成」</strong> ボタンをクリックします。</p>
+
+              <!-- ECRリポジトリ作成手順2 スライドショー -->
+              <div class="inline-slideshow" id="create-ecr-2-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ecr-2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ecr-2-slide-img" src="images/07/handson/create-ecr-2.png" alt="ECRリポジトリ作成手順2 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ecr-2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ecr-2-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ecr-2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ecr-2', {
+                  folder: 'images/07/handson',
+                  prefix: 'create-ecr-2',
+                  pageCount: 1,
+                  imgId: 'create-ecr-2-slide-img',
+                  counterId: 'create-ecr-2-counter',
+                  indicatorsId: 'create-ecr-2-indicators'
+                });
+              </script>
+
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">3</span>
-              <span class="step-title">ECRにログインする（ローカルのターミナル）</span>
+              <span class="step-title">ECRリポジトリ（フロントエンド用）を作成する</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">ここからはご自身のPCのターミナル（またはコマンドプロンプト等）で作業します。現在のディレクトリが親フォルダである <code>myapp/</code> であることを確認してください。</p>
-              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
-                <li>AWSコンソールの「プッシュコマンドの表示」画面にある <strong>1番目のコマンド（<code>aws ecr get-login-password...</code> から始まるもの）</strong> をコピーします。</li>
-                <li>ターミナルに貼り付けて実行します。</li>
-                <li><code>Login Succeeded</code> と表示されれば成功です。</li>
-              </ol>
-              <div class="info-box">
-                <div class="info-box-title">&#128161; 大事なポイント</div>
-                <p>リージョンの指定ミスは非常に多いので、ECR を作ったリージョン（例: <code>ap-northeast-1</code>）と同じ値にそろっているか確認してください。</p>
+              <p class="text-paragraph">「リポジトリ名」に <code>myapp-frontend-XX</code> と入力し、画面一番下の「リポジトリを作成」を押します。これでReact用のリポジトリが1つ完成します。</p>
+
+              <!-- ECRリポジトリ作成手順3 スライドショー -->
+              <div class="inline-slideshow" id="create-ecr-3-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ecr-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ecr-3-slide-img" src="images/07/handson/create-ecr-3.png" alt="ECRリポジトリ作成手順3 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ecr-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ecr-3-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ecr-3-indicators"></div>
+                </div>
               </div>
+
+              <script>
+                initInlineSlideshow('create-ecr-3', {
+                  folder: 'images/07/handson',
+                  prefix: 'create-ecr-3',
+                  pageCount: 3,
+                  imgId: 'create-ecr-3-slide-img',
+                  counterId: 'create-ecr-3-counter',
+                  indicatorsId: 'create-ecr-3-indicators'
+                });
+              </script>
+
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">4</span>
-              <span class="step-title">ローカルでbuildしてpushする（ローカルのターミナル）</span>
+              <span class="step-title">ECRリポジトリ（バックエンド用）を作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">まったく同じ手順でもう一度「リポジトリを作成」を開き、リポジトリ名 <code>myapp-backend-XX</code> で作成します。これでSpring Boot用のリポジトリも完成です。</p>
+
+              <!-- ECRリポジトリ作成手順4 スライドショー -->
+              <div class="inline-slideshow" id="create-ecr-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ecr-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ecr-4-slide-img" src="images/07/handson/create-ecr-4.png" alt="ECRリポジトリ作成手順4 1 / 4">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ecr-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ecr-4-counter">1 / 4</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ecr-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ecr-4', {
+                  folder: 'images/07/handson',
+                  prefix: 'create-ecr-4',
+                  pageCount: 4,
+                  imgId: 'create-ecr-4-slide-img',
+                  counterId: 'create-ecr-4-counter',
+                  indicatorsId: 'create-ecr-4-indicators'
+                });
+              </script>
+
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">プッシュコマンドの表示（AWSコンソール）</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">次に、ローカル環境からAWSへイメージをプッシュするための専用コマンドを確認します。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>コンソールのリポジトリ一覧画面で、作成した <code>myapp-frontend-XX</code> の左横にあるラジオボタン（〇）にチェックを入れます。</li>
+                <li>画面右上にある <strong>「プッシュコマンドの表示」</strong> というボタンをクリックします。</li>
+                <li>画面に「1. 認証 (login)」「2. ビルド (build)」「3. タグ付け (tag)」「4. プッシュ (push)」の4つのコマンドが表示されます（お使いのOSに合わせてmacOS/LinuxかWindowsかを選択してください）。</li>
+              </ol>
+              <p class="text-paragraph">この画面を開いたまま、次のステップに進みます。</p>
+
+              <!-- ECRリポジトリ作成手順5 スライドショー -->
+              <div class="inline-slideshow" id="create-ecr-5-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="create-ecr-5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="create-ecr-5-slide-img" src="images/07/handson/create-ecr-5.png" alt="ECRリポジトリ作成手順5 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="create-ecr-5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="create-ecr-5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="create-ecr-5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('create-ecr-5', {
+                  folder: 'images/07/handson',
+                  prefix: 'create-ecr-5',
+                  pageCount: 2,
+                  imgId: 'create-ecr-5-slide-img',
+                  counterId: 'create-ecr-5-counter',
+                  indicatorsId: 'create-ecr-5-indicators'
+                });
+              </script>
+
+            </div>
+          </div>
+
+          <!-- AWS CLIのインストール -->
+          <h3 class="section-subtitle">AWS CLIのインストール（ローカル）</h3>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">AWS CLIのインストール</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ここからはご自身のPCのターミナル（またはコマンドプロンプト等）で作業します。MacOSを対象としてインストール手順を記載します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>brew install awscli</div>
+              <p class="text-paragraph">インストール後、以下のコマンドを実行してバージョン情報が表示されれば成功です。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>aws --version</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">AWS CLIの初期設定</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">AWSコンソールで取得したアクセスキーとシークレットキーを使って、AWS CLIの初期設定を行います。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>aws configure</div>
+              <ol>
+                <li>AWS Access Key ID: （アクセスキーを入力）</li>
+                <li>AWS Secret Access Key: （シークレットキーを入力）</li>
+                <li>Default region name: <code>ap-northeast-1</code></li>
+                <li>Default output format: <code>json</code></li>
+              </ol>
+              <p class="text-paragraph">アクセスキー及びシークレットキーは、管理者から共有してもらう必要があります。</p>
+            </div>
+          </div>
+
+          <!-- ECRにイメージをpushする（ローカルのターミナル） -->
+          <h3 class="section-subtitle">ECRにイメージをpushする（ローカルのターミナル）</h3>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ECRにログインする</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">現在のディレクトリが親フォルダである <code>myapp/</code> であることを確認してください。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>AWSコンソールの「プッシュコマンドの表示」画面にある <strong>1番目のコマンド（<code>aws ecr get-login-password...</code> から始まるもの）</strong> をコピーします。</li>
+                <li>ターミナルに貼り付けて実行します。</li>
+                <li><code>Login Succeeded</code> と表示されれば成功です。</li>
+              </ol>
+              
+              <!-- ECRプッシュ手順1 スライドショー -->
+              <div class="inline-slideshow" id="push-ecr-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="push-ecr-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="push-ecr-1-slide-img" src="images/07/handson/push-ecr-1.png" alt="ECRプッシュ手順1 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="push-ecr-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="push-ecr-1-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="push-ecr-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('push-ecr-1', {
+                  folder: 'images/07/handson',
+                  prefix: 'push-ecr-1',
+                  pageCount: 1,
+                  imgId: 'push-ecr-1-slide-img',
+                  counterId: 'push-ecr-1-counter',
+                  indicatorsId: 'push-ecr-1-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">ローカルでbuildしてpushする（フロントエンド）</span>
             </div>
             <div class="step-content">
               <p class="text-paragraph">最後に、Dockerイメージを作成（ビルド）し、ECRにアップロード（プッシュ）します。ここで<strong>ビルドコマンドのパス指定だけ修正する</strong>のがポイントです。</p>
               
-              <h4 style="margin-top: 1em;">1. React（フロントエンド）のプッシュ</h4>
-              <p class="text-paragraph">引き続き <code>myapp-frontend</code> のプッシュコマンド画面を見ながら進めます。</p>
+              <p class="text-paragraph">引き続き <code>myapp-frontend-XX</code> のプッシュコマンド画面を見ながら進めます。</p>
               <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
                 <li><strong>ビルド:</strong> 表示されている2番目のコマンドをターミナルに貼り付けますが、一番最後の <code>.</code>（カレントディレクトリ）を <code>./frontend</code> に書き換えて実行します。<br>
-<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-frontend ./frontend</div></li>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-frontend-XX ./frontend</div></li>
                 <li><strong>タグ付け:</strong> 3番目のコマンド（<code>docker tag ...</code>）をそのままコピーして実行します。</li>
                 <li><strong>プッシュ:</strong> 4番目のコマンド（<code>docker push ...</code>）をそのままコピーして実行します。</li>
               </ul>
+              
+              <!-- ECRプッシュ手順2 スライドショー -->
+              <div class="inline-slideshow" id="push-ecr-2-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="push-ecr-2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="push-ecr-2-slide-img" src="images/07/handson/push-ecr-2.png" alt="ECRプッシュ手順2 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="push-ecr-2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="push-ecr-2-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="push-ecr-2-indicators"></div>
+                </div>
+              </div>
 
-              <h4 style="margin-top: 1em;">2. Spring Boot（バックエンド）のプッシュ</h4>
+              <script>
+                initInlineSlideshow('push-ecr-2', {
+                  folder: 'images/07/handson',
+                  prefix: 'push-ecr-2',
+                  pageCount: 2,
+                  imgId: 'push-ecr-2-slide-img',
+                  counterId: 'push-ecr-2-counter',
+                  indicatorsId: 'push-ecr-2-indicators'
+                });
+              </script>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">ローカルでbuildしてpushする（バックエンド）</span>
+            </div>
+            <div class="step-content">
               <p class="text-paragraph">フロントエンドが終わったら、「プッシュコマンドの表示」画面を閉じます。リポジトリ一覧から <code>myapp-backend</code> を選択し直して、再度「プッシュコマンドの表示」を開きます。</p>
               <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
                 <li><strong>ビルド:</strong> 2番目のコマンドを貼り付け、一番最後を <code>./backend</code> に書き換えて実行します。<br>
@@ -908,6 +1194,38 @@ docker compose up -d --build</div>
                 <li><strong>タグ付け:</strong> 3番目のコマンドをそのままコピーして実行します。</li>
                 <li><strong>プッシュ:</strong> 4番目のコマンドをそのままコピーして実行します。</li>
               </ul>
+
+              <!-- ECRプッシュ手順3 スライドショー -->
+              <div class="inline-slideshow" id="push-ecr-3-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="push-ecr-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="push-ecr-3-slide-img" src="images/07/handson/push-ecr-3.png" alt="ECRプッシュ手順3 1 / 4">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="push-ecr-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="push-ecr-3-counter">1 / 4</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="push-ecr-3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('push-ecr-3', {
+                  folder: 'images/07/handson',
+                  prefix: 'push-ecr-3',
+                  pageCount: 4,
+                  imgId: 'push-ecr-3-slide-img',
+                  counterId: 'push-ecr-3-counter',
+                  indicatorsId: 'push-ecr-3-indicators'
+                });
+              </script>
+              
             </div>
           </div>
         </div>
@@ -929,13 +1247,30 @@ docker compose up -d --build</div>
             </ul>
           </div>
 
+          <h3 class="section-subtitle">EC2にECR読み取り権限（IAMロール）を付与する（AWSコンソール）</h3>
+          <p class="text-paragraph">前提：IAMの管理者がEC2にECR読み取り権限（IAMロール）を作成済みとする。</p>
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
-              <span class="step-title">EC2へのSSH接続</span>
+              <span class="step-title">IAMロールを付与する</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph"><strong>【ローカル】</strong> MacからEC2へSSH接続します。</p>
+              <ol class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
+                <li>「EC2」 のコンソールを開き、左メニューの 「インスタンス」 から今回使用するEC2にチェックを入れます。</li>
+                <li>画面右上の 「アクション」 ＞ 「セキュリティ」 ＞ 「IAM ロールを変更」 をクリックします。</li>
+                <li>プルダウンから先ほど作成したロールを選択し、「IAM ロールの更新」 をクリックします。<br>これで、EC2にはIAMロールが付きました。</li>
+              </ol>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">EC2に接続し、Docker環境を構築する</h3>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">EC2にSSH接続する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ターミナルを開き、作成したEC2にSSHで接続します。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>ssh -i "your-key.pem" ec2-user@&lt;EC2のパブリックIPまたはDNS名&gt;</div>
             </div>
           </div>
@@ -943,13 +1278,14 @@ docker compose up -d --build</div>
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">2</span>
-              <span class="step-title">Dockerのインストール</span>
+              <span class="step-title">DockerとDocker Composeのインストール</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph"><strong>【EC2上】</strong> EC2にDockerとDocker Compose pluginをインストールします。</p>
+              <p class="text-paragraph">EC2にDockerとDocker Compose pluginをインストールします。以下のコマンドを順に実行してください。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>sudo dnf update -y
 sudo dnf install -y docker
 sudo service docker start
+sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 sudo dnf install -y docker-compose-plugin</div>
             </div>
@@ -961,55 +1297,114 @@ sudo dnf install -y docker-compose-plugin</div>
               <span class="step-title">権限の反映</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph"><strong>【EC2上】</strong> <code>docker</code> グループへの追加を反映させるため、一度ログアウト（<code>exit</code>）して再度SSHで入り直します。</p>
+              <p class="text-paragraph">dockerグループに追加したあとは、一度ログアウトして入り直します。ターミナルで <code>exit</code> と入力して接続を切り、再度上記のSSHコマンドで接続してください。</p>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">ECRにログインする</h3>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ECRにログインする</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">以下のコマンド内の &lt;AWSアカウントID&gt; をご自身の12桁の数字に置き換えて実行してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com</div>
+              <p class="text-paragraph"><code>Login Succeeded</code> と表示されれば準備完了です。</p>
+            </div>
+          </div>
+
+          <h3 class="section-subtitle">ComposeファイルをEC2に配置する</h3>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <span class="step-title">ローカルの docker-compose.yml を本番用に修正する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ローカルのファイルはコンテナを「ビルド（<code>build:</code>）」する設定になっていますが、EC2ではECRから「イメージをダウンロード（<code>image:</code>）」する設定にする必要があります。</p>
+              <p class="text-paragraph">ローカルPCのエディタで <code>myapp/deploy/docker-compose.yml</code> を開き、以下のように書き換えて上書き保存します。（※ &lt;AWSアカウントID&gt; の部分はご自身の環境に合わせて書き換えてください）</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>services:
+  frontend:
+    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-frontend:latest
+    ports:
+      - "80:80"
+  backend:
+    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-backend:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sampledb
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sampledb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # init.sql の読み込み設定を残す
+      - ../mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+volumes:
+  mysql_data:</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <span class="step-title">EC2側に転送先のフォルダを作成する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">現在開いている <strong>EC2のターミナル</strong> で、以下のコマンドを実行します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>mkdir -p ~/myapp/deploy ~/myapp/mysql</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">ローカルPCからファイル転送（scp）を実行する</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ローカルの親フォルダ（<code>myapp/</code> のひとつ上の階層）に移動した状態で、以下の <code>scp</code> コマンドを実行してファイルを転送します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 1. docker-compose.yml を EC2 の deploy フォルダへ転送
+scp -i "your-key.pem" myapp/deploy/docker-compose.yml ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/deploy/
+
+# 2. init.sql を EC2 の mysql フォルダへ転送
+scp -i "your-key.pem" myapp/mysql/init.sql ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/mysql/</div>
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">4</span>
-              <span class="step-title">ECRへのログイン</span>
+              <span class="step-title">EC2で起動</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph"><strong>【EC2上】</strong> EC2側からECRにログインします。ハンズオン3のログインコマンドと同じものを実行します。</p>
+              <p class="text-paragraph">転送が完了したら、再度EC2にSSH接続し、デプロイ用フォルダに移動して起動コマンドを実行します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 再度EC2にSSH接続
+ssh -i "your-key.pem" ec2-user@&lt;EC2のパブリックIP&gt;
+
+# 転送したフォルダに移動してコンテナを起動
+cd ~/myapp/deploy
+docker compose pull
+docker compose up -d
+docker compose ps</div>
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">5</span>
-              <span class="step-title">設定ファイルの転送</span>
-            </div>
-            <div class="step-content">
-              <p class="text-paragraph"><strong>【ローカル】</strong> 別のターミナルを開き、ローカルの <code>docker-compose.yml</code> と <code>.env</code> をEC2に転送します。</p>
-              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>scp -i "your-key.pem" docker-compose.yml .env ec2-user@&lt;EC2のIP&gt;:~/myapp/deploy/</div>
-            </div>
-          </div>
-
-          <div class="step-container">
-            <div class="step-header">
-              <span class="step-number">6</span>
-              <span class="step-title">コンテナの起動</span>
-            </div>
-            <div class="step-content">
-              <p class="text-paragraph"><strong>【EC2上】</strong> 転送したディレクトリに移動し、イメージをPullしてコンテナを起動します。</p>
-              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>docker compose --env-file .env pull
-docker compose --env-file .env up -d</div>
-            </div>
-          </div>
-
-          <div class="step-container">
-            <div class="step-header">
-              <span class="step-number">7</span>
               <span class="step-title">動作確認</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph"><strong>【ブラウザ】</strong> <code>http://&lt;EC2のパブリックIP&gt;</code> にアクセスし、以下の確認を行います。</p>
-              <ul class="feature-list">
-                <li>Reactの画面が開くか</li>
-                <li>画面からAPIを呼び、Spring Bootが返るか</li>
-                <li>データ登録後にEC2上でコンテナを再起動し、MySQLのデータが残るか（volumeの確認）</li>
-              </ul>
+              <p class="text-paragraph">起動が完了したら、ブラウザから <code>http://&lt;EC2のパブリックIP&gt;</code> にアクセスし、正常に動作しているか確認してください。</p>
             </div>
           </div>
         </div>
