@@ -753,6 +753,17 @@ export default App</div>
         proxy_pass http://backend:8080/api/;
     }
 }</div>
+
+              <div class="info-box" style="margin-top: 1.5rem;">
+                <div class="info-box-title">&#128161; 【コラム】なぜNginxの設定ファイルを作成するの？</div>
+                <p>Nginxを使ってReactアプリを本番配信する際、デフォルト設定のままでは不都合があるため、独自の設定ルールを記述しています。<br>
+                <br>
+                ・<strong>SPA特有の「404エラー」を防ぐため：</strong><br>
+                Reactは単一の <code>index.html</code> で画面を切り替えます。直接URLにアクセスされた際もエラーにならないよう、常に処理を <code>index.html</code> に流す設定（<code>try_files</code>）が必要です。<br>
+                <br>
+                ・<strong>CORSエラーを回避しAPI通信するため：</strong><br>
+                ポートが異なるSpring Boot（8080番）へ直接通信すると、ブラウザのセキュリティ（CORS）でブロックされます。「<code>/api/</code> への通信は裏側のSpring Bootへ転送（リバースプロキシ）する」設定により、ブラウザからは同じNginx（80番）と通信しているように見せかけ、エラーを回避します。</p>
+              </div>
             </div>
           </div>
         </div>
@@ -844,7 +855,7 @@ EXPOSE 80</div>
               <p class="text-paragraph">Spring Bootはjarを作成し、コンテナ内で <code>java -jar</code> で起動する形にすると理解しやすいです。まずはGradleでjarを作り、そのjarをDockerfileでコピーして、8080番で起動する設定にします。</p>
               
               <h4 style="margin-top: 1em;">1. ローカルでjarファイルをビルドする</h4>
-              <p class="text-paragraph">ターミナルを開き、<code>myapp/backend</code> フォルダに移動して以下のコマンドを実行し、jarファイルを作成します（※Java環境が必要です。もしJava環境がない場合は、後述のDocker Compose起動時にエラーになりますが、今回はこの方法で進めます）。</p>
+              <p class="text-paragraph">ターミナルを開き、<code>myapp/backend</code> フォルダに移動して以下のコマンドを実行し、jarファイルを作成します（※Java環境が必要です。もしJava環境がない場合は、後述のDocker Compose起動時にエラーになります）。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ../backend
 
 # Mac/Linuxの場合
@@ -1498,7 +1509,6 @@ docker compose up -d --build</div>
           </script>
 
           <h3 class="section-subtitle">EC2にECR読み取り権限（IAMロール）を付与する（AWSコンソール）</h3>
-          <p class="text-paragraph">前提：IAMの管理者がEC2にECR読み取り権限（IAMロール）を作成済みとする。</p>
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
@@ -1982,8 +1992,8 @@ docker compose ps</div>
             </div>
             <div class="step-content">
               <ul class="feature-list">
-                <li>S3ダッシュボードから作成したバケットのリンクをクリックします。</li>
-                <li>アップロードしたファイルのチェックボックスにチェックを入れ、「削除」をクリックします。</li>
+                <li>S3ダッシュボードを開きます。</li>
+                <li>バケットのラジオボタンにチェックを入れ、「空にする」をクリックします。</li>
                 <li>確認画面で <code>完全に削除</code> と入力して「オブジェクトの削除」を実行します。</li>
                 <li>バケット一覧画面に戻り、バケット名を選択して「削除」をクリックします（確認画面でバケット名を入力）。</li>
               </ul>
