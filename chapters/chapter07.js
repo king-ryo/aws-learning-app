@@ -415,14 +415,87 @@ const chapter07 = {
       type: "explanation",
       content: `
         <div class="chapter-container">
+          <h2 class="section-title">これからのハンズオン（1〜4）の全体像</h2>
+          <p class="text-paragraph">ここからのハンズオンでは、以下の4つのステップを通じて、ローカルPCで作成したアプリケーションをAWS（EC2）上にコンテナとしてデプロイします。まずは全体の流れを把握しておきましょう。</p>
+          <div class="info-box" style="margin-bottom: 2.5rem;">
+            <ol style="padding-left: 1.5rem; line-height: 1.8; margin-bottom: 0;">
+              <li><strong>ハンズオン1（準備）：プロジェクト作成</strong><br>ローカル環境でReact（フロント）とSpring Boot（バック）のベースとなるコードを作成します。</li>
+              <li><strong>ハンズオン2（準備）：Dockerを使ってローカルで動作確認</strong><br>アプリをコンテナ化するための <code>Dockerfile</code> や <code>docker-compose.yml</code> を作成し、まずはローカルPC上で正常に動くか確認します。</li>
+              <li><strong>ハンズオン3：ECRにコンテナイメージをプッシュする</strong><br>AWS上にコンテナ保管庫（ECRリポジトリ）を作成し、ローカルで作成したイメージをアップロード（プッシュ）します。</li>
+              <li><strong>ハンズオン4：EC2でコンテナを起動する</strong><br>EC2サーバーにSSH接続してDocker環境を構築し、ECRからイメージをダウンロード（プル）してコンテナを起動・本番公開します。</li>
+            </ol>
+
+            <!-- 全体の流れ スライドショー -->
+            <div class="inline-slideshow" id="overall-flow-slideshow">
+              <div class="inline-slideshow-header">
+                <p class="inline-slideshow-title">全体の流れ</p>
+              </div>
+              <div class="inline-slideshow-body">
+                <div class="inline-slide-area">
+                  <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="overall-flow" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                  <div class="inline-slide-image-wrapper">
+                    <img class="inline-slide-image" id="overall-flow-slide-img" src="images/07/handson/overall-flow.png" alt="全体の流れ 1 / 1">
+                  </div>
+                  <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="overall-flow" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                </div>
+                <div class="inline-slide-counter-area">
+                  <span class="inline-slide-counter" id="overall-flow-counter">1 / 1</span>
+                </div>
+                <div class="inline-slide-indicators" id="overall-flow-indicators"></div>
+              </div>
+            </div>
+
+            <script>
+              initInlineSlideshow('overall-flow', {
+                folder: 'images/07/handson',
+                prefix: 'overall-flow',
+                pageCount: 1,
+                imgId: 'overall-flow-slide-img',
+                counterId: 'overall-flow-counter',
+                indicatorsId: 'overall-flow-indicators'
+              });
+            </script>
+
+          </div>
+
           <h2 class="section-title">&#128736; ハンズオン1：（準備）プロジェクト作成</h2>
-          
           <div class="point-box">
             <ul class="feature-list">
               <li><strong>操作場所：</strong> ローカル（Macのターミナル / エディタ）</li>
               <li><strong>ゴール：</strong> Docker化するためのReact（フロントエンド）とSpring Boot（バックエンド）のプロジェクトを作成する。</li>
             </ul>
           </div>
+
+          <!-- ステップ1のイメージ スライドショー -->
+          <div class="inline-slideshow" id="step1-flow-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">ステップ1の流れ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="step1-flow" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="step1-flow-slide-img" src="images/07/handson/step1-flow.png" alt="ステップ1の流れ 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="step1-flow" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="step1-flow-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="step1-flow-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('step1-flow', {
+              folder: 'images/07/handson',
+              prefix: 'step1-flow',
+              pageCount: 1,
+              imgId: 'step1-flow-slide-img',
+              counterId: 'step1-flow-counter',
+              indicatorsId: 'step1-flow-indicators'
+            });
+          </script>
 
           <p class="text-paragraph">
             このステップでは、推奨されるフォルダ構成に沿って、React（フロントエンド）、Spring Boot（バックエンド）、およびMySQL（データベース）の土台を作り、それぞれが連携できるようにコードを記述していきます。
@@ -701,6 +774,37 @@ export default App</div>
             </ul>
           </div>
 
+          <!-- ステップ2のイメージ スライドショー -->
+          <div class="inline-slideshow" id="step2-flow-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">ステップ2の流れ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="step2-flow" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="step2-flow-slide-img" src="images/07/handson/step2-flow.png" alt="ステップ2の流れ 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="step2-flow" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="step2-flow-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="step2-flow-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('step2-flow', {
+              folder: 'images/07/handson',
+              prefix: 'step2-flow',
+              pageCount: 1,
+              imgId: 'step2-flow-slide-img',
+              counterId: 'step2-flow-counter',
+              indicatorsId: 'step2-flow-indicators'
+            });
+          </script>
+
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
@@ -895,6 +999,37 @@ docker compose up -d --build</div>
               <li><strong>ゴール：</strong> ECRリポジトリを作成し、ローカルでビルドしたイメージをプッシュする。</li>
             </ul>
           </div>
+
+          <!-- ステップ3のイメージ スライドショー -->
+          <div class="inline-slideshow" id="step3-flow-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">ステップ3の流れ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="step3-flow" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="step3-flow-slide-img" src="images/07/handson/step3-flow.png" alt="ステップ3の流れ 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="step3-flow" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="step3-flow-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="step3-flow-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('step3-flow', {
+              folder: 'images/07/handson',
+              prefix: 'step3-flow',
+              pageCount: 1,
+              imgId: 'step3-flow-slide-img',
+              counterId: 'step3-flow-counter',
+              indicatorsId: 'step3-flow-indicators'
+            });
+          </script>
 
           <!-- ECRリポジトリの作成（AWSコンソール） -->
           <h3 class="section-subtitle">ECRリポジトリの作成（AWSコンソール）</h3>
@@ -1154,6 +1289,20 @@ docker compose up -d --build</div>
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
+              <span class="step-title">frontend/App.jsxのURLを修正</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">ビルドする前に、Reactからリクエストを送るURLをAWS環境に合わせて変更します。<br>
+              ローカルの <code>myapp/frontend/src/App.jsx</code> を開き、以下のように修正して上書き保存してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>useEffect(() =&gt; {
+    // Spring BootのAPIエンドポイントを呼び出す
+    fetch('http://&lt;EC2のパブリックIPアドレス&gt;/api/messages')</div>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">2</span>
               <span class="step-title">ECRにログインする</span>
             </div>
             <div class="step-content">
@@ -1199,7 +1348,7 @@ docker compose up -d --build</div>
 
           <div class="step-container">
             <div class="step-header">
-              <span class="step-number">2</span>
+              <span class="step-number">3</span>
               <span class="step-title">ローカルでbuildしてpushする（フロントエンド）</span>
             </div>
             <div class="step-content">
@@ -1253,7 +1402,7 @@ docker compose up -d --build</div>
 
           <div class="step-container">
             <div class="step-header">
-              <span class="step-number">3</span>
+              <span class="step-number">4</span>
               <span class="step-title">ローカルでbuildしてpushする（バックエンド）</span>
             </div>
             <div class="step-content">
@@ -1317,6 +1466,37 @@ docker compose up -d --build</div>
             </ul>
           </div>
 
+          <!-- ステップ4のイメージ スライドショー -->
+          <div class="inline-slideshow" id="step4-flow-slideshow">
+            <div class="inline-slideshow-header">
+              <p class="inline-slideshow-title">ステップ4の流れ</p>
+            </div>
+            <div class="inline-slideshow-body">
+              <div class="inline-slide-area">
+                <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="step4-flow" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                <div class="inline-slide-image-wrapper">
+                  <img class="inline-slide-image" id="step4-flow-slide-img" src="images/07/handson/step4-flow.png" alt="ステップ4の流れ 1 / 1">
+                </div>
+                <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="step4-flow" data-dir="next" aria-label="次のスライド">&#10095;</button>
+              </div>
+              <div class="inline-slide-counter-area">
+                <span class="inline-slide-counter" id="step4-flow-counter">1 / 1</span>
+              </div>
+              <div class="inline-slide-indicators" id="step4-flow-indicators"></div>
+            </div>
+          </div>
+
+          <script>
+            initInlineSlideshow('step4-flow', {
+              folder: 'images/07/handson',
+              prefix: 'step4-flow',
+              pageCount: 1,
+              imgId: 'step4-flow-slide-img',
+              counterId: 'step4-flow-counter',
+              indicatorsId: 'step4-flow-indicators'
+            });
+          </script>
+
           <h3 class="section-subtitle">EC2にECR読み取り権限（IAMロール）を付与する（AWSコンソール）</h3>
           <p class="text-paragraph">前提：IAMの管理者がEC2にECR読み取り権限（IAMロール）を作成済みとする。</p>
           <div class="step-container">
@@ -1330,6 +1510,37 @@ docker compose up -d --build</div>
                 <li>画面右上の 「アクション」 ＞ 「セキュリティ」 ＞ 「IAM ロールを変更」 をクリックします。</li>
                 <li>プルダウンから先ほど作成したロールを選択し、「IAM ロールの更新」 をクリックします。<br>これで、EC2にはIAMロールが付きました。</li>
               </ol>
+
+              <!-- IAMロール付与手順1 スライドショー -->
+              <div class="inline-slideshow" id="iam-role-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="iam-role-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="iam-role-1-slide-img" src="images/07/handson/iam-role-1.png" alt="IAMロール付与手順1 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="iam-role-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="iam-role-1-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="iam-role-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('iam-role-1', {
+                  folder: 'images/07/handson',
+                  prefix: 'iam-role-1',
+                  pageCount: 3,
+                  imgId: 'iam-role-1-slide-img',
+                  counterId: 'iam-role-1-counter',
+                  indicatorsId: 'iam-role-1-indicators'
+                });
+              </script>
             </div>
           </div>
 
@@ -1392,23 +1603,31 @@ uname -m</div>
               <p class="text-paragraph"><code>x86_64</code> と表示された場合</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># Dockerの設定ディレクトリを変数に格納
 DOCKER_CONFIG=\${DOCKER_CONFIG:-$HOME/.docker}
+
 # プラグイン保存用のディレクトリを作成
 mkdir -p $DOCKER_CONFIG/cli-plugins
+
 # Docker Composeの実行ファイルをダウンロード
 curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
 # ダウンロードしたファイルに実行権限を付与
 chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+
 # インストールが成功したかバージョンを確認
 docker compose version</div>
               <p class="text-paragraph"><code>aarch64</code> と表示された場合</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># Dockerの設定ディレクトリを変数に格納
 DOCKER_CONFIG=\${DOCKER_CONFIG:-$HOME/.docker}
+
 # プラグイン保存用のディレクトリを作成
 mkdir -p $DOCKER_CONFIG/cli-plugins
+
 # Docker Composeの実行ファイルをダウンロード
 curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-aarch64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
 # ダウンロードしたファイルに実行権限を付与
 chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+
 # インストールが成功したかバージョンを確認
 docker compose version</div>
             </div>
@@ -1424,10 +1643,41 @@ docker compose version</div>
               <p class="text-paragraph">以下のコマンド内の &lt;AWSアカウントID&gt; をご自身の12桁の数字に置き換えて実行してください。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com</div>
               <p class="text-paragraph"><code>Login Succeeded</code> と表示されれば準備完了です。</p>
+
+              <!-- AWSアカウントIDの記載場所 -->
+              <div class="inline-slideshow" id="aws-account-id-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">AWSアカウントIDの確認方法</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="aws-account-id" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="aws-account-id-slide-img" src="images/07/handson/aws-account-id.png" alt="AWSアカウントIDの記載場所 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="aws-account-id" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="aws-account-id-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="aws-account-id-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('aws-account-id', {
+                  folder: 'images/07/handson',
+                  prefix: 'aws-account-id',
+                  pageCount: 1,
+                  imgId: 'aws-account-id-slide-img',
+                  counterId: 'aws-account-id-counter',
+                  indicatorsId: 'aws-account-id-indicators'
+                });
+              </script>
             </div>
           </div>
 
-          <h3 class="section-subtitle">ComposeファイルをEC2に配置する</h3>
+          <h3 class="section-subtitle">アプリケーションのデプロイ</h3>
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">1</span>
@@ -1491,6 +1741,39 @@ scp -i "~/Downloads/myapp-key-XX.pem" myapp/deploy/docker-compose.yml ec2-user@&
 
 # 2. init.sql を EC2 の mysql フォルダへ転送
 scp -i "~/Downloads/myapp-key-XX.pem" myapp/mysql/init.sql ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/mysql/</div>
+
+
+
+            <!-- EC2デプロイ3 スライドショー -->
+            <div class="inline-slideshow" id="ec2-deploy-3-slideshow">
+              <div class="inline-slideshow-header">
+                <p class="inline-slideshow-title">&#128196; 画面例</p>
+              </div>
+              <div class="inline-slideshow-body">
+                <div class="inline-slide-area">
+                  <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="ec2-deploy-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                  <div class="inline-slide-image-wrapper">
+                    <img class="inline-slide-image" id="ec2-deploy-3-slide-img" src="images/07/handson/ec2-deploy-3.png" alt="EC2デプロイ3 1 / 1">
+                  </div>
+                  <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="ec2-deploy-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                </div>
+                <div class="inline-slide-counter-area">
+                  <span class="inline-slide-counter" id="ec2-deploy-3-counter">1 / 1</span>
+                </div>
+                <div class="inline-slide-indicators" id="ec2-deploy-3-indicators"></div>
+              </div>
+            </div>
+
+            <script>
+              initInlineSlideshow('ec2-deploy-3', {
+                folder: 'images/07/handson',
+                prefix: 'ec2-deploy-3',
+                pageCount: 1,
+                imgId: 'ec2-deploy-3-slide-img',
+                counterId: 'ec2-deploy-3-counter',
+                indicatorsId: 'ec2-deploy-3-indicators'
+              });
+            </script>
             </div>
           </div>
 
@@ -1510,6 +1793,38 @@ cd ~/myapp/deploy
 docker compose pull
 docker compose up -d
 docker compose ps</div>
+
+              <!-- EC2デプロイ4 スライドショー -->
+              <div class="inline-slideshow" id="ec2-deploy-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="ec2-deploy-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="ec2-deploy-4-slide-img" src="images/07/handson/ec2-deploy-4.png" alt="EC2デプロイ4 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="ec2-deploy-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="ec2-deploy-4-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="ec2-deploy-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('ec2-deploy-4', {
+                  folder: 'images/07/handson',
+                  prefix: 'ec2-deploy-4',
+                  pageCount: 2,
+                  imgId: 'ec2-deploy-4-slide-img',
+                  counterId: 'ec2-deploy-4-counter',
+                  indicatorsId: 'ec2-deploy-4-indicators'
+                });
+              </script>
+
             </div>
           </div>
 
@@ -1520,6 +1835,38 @@ docker compose ps</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">起動が完了したら、ブラウザから <code>http://&lt;EC2のパブリックIP&gt;</code> にアクセスし、正常に動作しているか確認してください。</p>
+
+              <!-- EC2デプロイ5 スライドショー -->
+              <div class="inline-slideshow" id="ec2-deploy-5-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="ec2-deploy-5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="ec2-deploy-5-slide-img" src="images/07/handson/ec2-deploy-5.png" alt="EC2デプロイ5 1 / 1">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="ec2-deploy-5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="ec2-deploy-5-counter">1 / 1</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="ec2-deploy-5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('ec2-deploy-5', {
+                  folder: 'images/07/handson',
+                  prefix: 'ec2-deploy-5',
+                  pageCount: 1,
+                  imgId: 'ec2-deploy-5-slide-img',
+                  counterId: 'ec2-deploy-5-counter',
+                  indicatorsId: 'ec2-deploy-5-indicators'
+                });
+              </script>
+
             </div>
           </div>
         </div>
@@ -1551,6 +1898,38 @@ docker compose ps</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">EC2ダッシュボードから起動したインスタンスを選択し、「インスタンスの状態」から「インスタンスを終了」を実行します。（これによりアタッチされていたEBSボリュームもデフォルト設定であれば削除されます）。</p>
+
+              <!-- お片付け1 スライドショー -->
+              <div class="inline-slideshow" id="cleanup-1-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="cleanup-1" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="cleanup-1-slide-img" src="images/07/handson/cleanup-1.png" alt="お片付け1 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="cleanup-1" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="cleanup-1-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="cleanup-1-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('cleanup-1', {
+                  folder: 'images/07/handson',
+                  prefix: 'cleanup-1',
+                  pageCount: 3,
+                  imgId: 'cleanup-1-slide-img',
+                  counterId: 'cleanup-1-counter',
+                  indicatorsId: 'cleanup-1-indicators'
+                });
+              </script>
+              
             </div>
           </div>
 
@@ -1561,6 +1940,38 @@ docker compose ps</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">ECRダッシュボードから作成したリポジトリ（frontend / backend）を選択し、削除します。</p>
+
+              <!-- お片付け2 スライドショー -->
+              <div class="inline-slideshow" id="cleanup-2-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="cleanup-2" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="cleanup-2-slide-img" src="images/07/handson/cleanup-2.png" alt="お片付け2 1 / 6">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="cleanup-2" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="cleanup-2-counter">1 / 6</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="cleanup-2-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('cleanup-2', {
+                  folder: 'images/07/handson',
+                  prefix: 'cleanup-2',
+                  pageCount: 6,
+                  imgId: 'cleanup-2-slide-img',
+                  counterId: 'cleanup-2-counter',
+                  indicatorsId: 'cleanup-2-indicators'
+                });
+              </script>
+              
             </div>
           </div>
           
@@ -1576,6 +1987,38 @@ docker compose ps</div>
                 <li>確認画面で <code>完全に削除</code> と入力して「オブジェクトの削除」を実行します。</li>
                 <li>バケット一覧画面に戻り、バケット名を選択して「削除」をクリックします（確認画面でバケット名を入力）。</li>
               </ul>
+
+              <!-- お片付け3 スライドショー -->
+              <div class="inline-slideshow" id="cleanup-3-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="cleanup-3" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="cleanup-3-slide-img" src="images/07/handson/cleanup-3.png" alt="お片付け3 1 / 6">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="cleanup-3" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="cleanup-3-counter">1 / 6</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="cleanup-3-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('cleanup-3', {
+                  folder: 'images/07/handson',
+                  prefix: 'cleanup-3',
+                  pageCount: 6,
+                  imgId: 'cleanup-3-slide-img',
+                  counterId: 'cleanup-3-counter',
+                  indicatorsId: 'cleanup-3-indicators'
+                });
+              </script>
+              
             </div>
           </div>
 
@@ -1586,16 +2029,38 @@ docker compose ps</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">VPCダッシュボードから作成したVPCを選択し、削除します。（関連するサブネット、IGW、セキュリティグループ等もまとめて削除されます）。</p>
-            </div>
-          </div>
 
-          <div class="step-container">
-            <div class="step-header">
-              <span class="step-number">5</span>
-              <span class="step-title">IAMロール/ユーザーの削除</span>
-            </div>
-            <div class="step-content">
-              <p class="text-paragraph">学習用に作成したIAMロール（EC2に付与したもの）とIAMユーザーを削除します。</p>
+              <!-- お片付け4 スライドショー -->
+              <div class="inline-slideshow" id="cleanup-4-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="cleanup-4" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="cleanup-4-slide-img" src="images/07/handson/cleanup-4.png" alt="お片付け4 1 / 3">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="cleanup-4" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="cleanup-4-counter">1 / 3</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="cleanup-4-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('cleanup-4', {
+                  folder: 'images/07/handson',
+                  prefix: 'cleanup-4',
+                  pageCount: 3,
+                  imgId: 'cleanup-4-slide-img',
+                  counterId: 'cleanup-4-counter',
+                  indicatorsId: 'cleanup-4-indicators'
+                });
+              </script>
+              
             </div>
           </div>
         </div>
