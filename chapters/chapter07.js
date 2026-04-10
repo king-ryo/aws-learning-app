@@ -499,7 +499,7 @@ INSERT INTO messages (content) VALUES ('Spring Boot connection successful!');</d
                 <li><strong>Packaging</strong>: Jar</li>
                 <li><strong>Java</strong>: 21</li>
                 <li><strong>Dependencies (依存関係)</strong>:
-                  <ul>
+                  <ul class="feature-list">
                     <li>Spring Web (API作成用)</li>
                     <li>Spring Data JPA (データベース操作用)</li>
                     <li>MySQL Driver (MySQL接続用)</li>
@@ -657,6 +657,31 @@ function App() {
 export default App</div>
             </div>
           </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <span class="step-title">Nginxの設定ファイルを作成</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph"><code>frontend/</code> フォルダの直下に <code>nginx.conf</code> を作成し、以下の内容を記述します。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>server {
+    listen 80;
+    
+    # 通常の画面アクセスはReactのファイルを返す
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # /api/ から始まる通信はSpring Bootへ丸投げする
+    location /api/ {
+        proxy_pass http://backend:8080/api/;
+    }
+}</div>
+            </div>
+          </div>
         </div>
       `
     },
@@ -698,6 +723,8 @@ RUN npm run build
 FROM nginx:alpine
 # ビルドした静的ファイルをNginxの配信フォルダにコピー
 COPY --from=build /app/dist /usr/share/nginx/html
+# Nginxの設定ファイルをコピー
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # 80番ポートで配信する
 EXPOSE 80</div>
               <p class="text-paragraph">これにより、EC2でもNginxコンテナが80番で配信するようになります。</p>
@@ -792,24 +819,62 @@ volumes:
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">4</span>
-              <span class="step-title">Dockerによる実行と動作確認</span>
+              <span class="step-title">Dockerによる実行</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">AWSに持っていく前に、必ずローカルPCで3つの確認を済ませます。ローカルで動かないものは、EC2に載せてもほぼ動きません。</p>
-              
-              <h4 style="margin-top: 1em;">1. コンテナの起動</h4>
               <p class="text-paragraph">ターミナルで <code>myapp/deploy</code> フォルダに移動し、コンテナを起動します。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ../deploy
 docker compose up -d --build</div>
               <p class="text-paragraph">※ 初回はイメージのビルドとダウンロードに数分かかります。</p>
+            </div>
+          </div>
 
-              <h4 style="margin-top: 1em;">2. 動作確認</h4>
-              <p class="text-paragraph">起動が完了したら、ブラウザを開いて以下の3点を確認します。</p>
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">5</span>
+              <span class="step-title">ローカルでの動作確認</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">起動が完了したら、ブラウザを開いて以下の3点を確認します。<br>
+              AWSに持っていく前に、必ずローカルPCで確認を済ませます。ローカルで動かないものは、EC2に載せてもほぼ動きません。</p>
+              
               <ul class="feature-list">
                 <li><strong>Reactの画面が開くか:</strong> <code>http://localhost</code> にアクセスし、Reactの画面が表示されることを確認します。</li>
                 <li><strong>Spring BootのAPIが返るか:</strong> <code>http://localhost:8080/api/messages</code> にアクセスし、JSON形式のデータ（例: <code>[{"id":1,"content":"Hello from MySQL!"},...]</code>）が返ってくることを確認します。</li>
                 <li><strong>Spring BootからMySQLに接続できるか:</strong> 上記のAPIからデータが返ってきていれば、MySQLへの接続も成功しています。また、Reactの画面上にも取得したメッセージリストが表示されているはずです。</li>
               </ul>
+              
+
+              <!-- 動作確認5 スライドショー -->
+              <div class="inline-slideshow" id="action-5-slideshow">
+                <div class="inline-slideshow-header">
+                  <p class="inline-slideshow-title">&#128196; 画面例</p>
+                </div>
+                <div class="inline-slideshow-body">
+                  <div class="inline-slide-area">
+                    <button class="inline-slide-arrow inline-slide-arrow-left" data-slideshow="action-5" data-dir="prev" aria-label="前のスライド">&#10094;</button>
+                    <div class="inline-slide-image-wrapper">
+                      <img class="inline-slide-image" id="action-5-slide-img" src="images/07/handson/action-5.png" alt="動作確認5 1 / 2">
+                    </div>
+                    <button class="inline-slide-arrow inline-slide-arrow-right" data-slideshow="action-5" data-dir="next" aria-label="次のスライド">&#10095;</button>
+                  </div>
+                  <div class="inline-slide-counter-area">
+                    <span class="inline-slide-counter" id="action-5-counter">1 / 2</span>
+                  </div>
+                  <div class="inline-slide-indicators" id="action-5-indicators"></div>
+                </div>
+              </div>
+
+              <script>
+                initInlineSlideshow('action-5', {
+                  folder: 'images/07/handson',
+                  prefix: 'action-5',
+                  pageCount: 2,
+                  imgId: 'action-5-slide-img',
+                  counterId: 'action-5-counter',
+                  indicatorsId: 'action-5-indicators'
+                });
+              </script>
             </div>
           </div>
         </div>
@@ -1142,11 +1207,16 @@ docker compose up -d --build</div>
               
               <p class="text-paragraph">引き続き <code>myapp-frontend-XX</code> のプッシュコマンド画面を見ながら進めます。</p>
               <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
-                <li><strong>ビルド:</strong> 表示されている2番目のコマンドをターミナルに貼り付けますが、一番最後の <code>.</code>（カレントディレクトリ）を <code>./frontend</code> に書き換えて実行します。<br>
-<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-frontend-XX ./frontend</div></li>
+                <li><strong>ビルド:</strong> 表示されている2番目のコマンドをターミナルに貼り付けますが、<code>build</code> と <code>-t</code> の間に <code>--platform linux/amd64</code> を追記し、一番最後の <code>.</code>（カレントディレクトリ）を <code>./frontend</code> に書き換えて実行します。<br>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build --platform linux/amd64 -t myapp-frontend-XX ./frontend</div></li>
                 <li><strong>タグ付け:</strong> 3番目のコマンド（<code>docker tag ...</code>）をそのままコピーして実行します。</li>
                 <li><strong>プッシュ:</strong> 4番目のコマンド（<code>docker push ...</code>）をそのままコピーして実行します。</li>
               </ul>
+
+              <div class="info-box">
+                <div class="info-box-title">&#128161; 【重要】なぜ --platform linux/amd64 を指定するのか？</div>
+                <p>M1/M2/M3チップ等のApple Siliconを搭載したMacでそのままDockerイメージをビルドすると、<strong>ARMアーキテクチャ</strong>向けのイメージが作成されます。<br>一方で、後ほどデプロイ先となる一般的なEC2インスタンス（Linux環境）は<strong>x86_64 (amd64) アーキテクチャ</strong>を採用しているため、アーキテクチャの違いによりEC2上でコンテナを起動した際に「exec format error」というエラーが発生して動かなくなってしまいます。<br>そのため、ビルド時に <code>--platform linux/amd64</code> をオプションとして指定することで、EC2で確実に動作するamd64アーキテクチャ向けのイメージを明示的に作成しています（WindowsやIntel Macをお使いの方にとっても害はありません）。</p>
+              </div>
               
               <!-- ECRプッシュ手順2 スライドショー -->
               <div class="inline-slideshow" id="push-ecr-2-slideshow">
@@ -1189,8 +1259,8 @@ docker compose up -d --build</div>
             <div class="step-content">
               <p class="text-paragraph">フロントエンドが終わったら、「プッシュコマンドの表示」画面を閉じます。リポジトリ一覧から <code>myapp-backend</code> を選択し直して、再度「プッシュコマンドの表示」を開きます。</p>
               <ul class="feature-list" style="padding-left: 1.5em; margin-bottom: 1em;">
-                <li><strong>ビルド:</strong> 2番目のコマンドを貼り付け、一番最後を <code>./backend</code> に書き換えて実行します。<br>
-<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build -t myapp-backend ./backend</div></li>
+                <li><strong>ビルド:</strong> 2番目のコマンドを貼り付け、フロントエンドの時と同様に <code>build</code> と <code>-t</code> の間に <code>--platform linux/amd64</code> を追記し、一番最後を <code>./backend</code> に書き換えて実行します。<br>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 例: docker build --platform linux/amd64 -t myapp-backend ./backend</div></li>
                 <li><strong>タグ付け:</strong> 3番目のコマンドをそのままコピーして実行します。</li>
                 <li><strong>プッシュ:</strong> 4番目のコマンドをそのままコピーして実行します。</li>
               </ul>
@@ -1271,23 +1341,32 @@ docker compose up -d --build</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">ターミナルを開き、作成したEC2にSSHで接続します。</p>
-              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>ssh -i "your-key.pem" ec2-user@&lt;EC2のパブリックIPまたはDNS名&gt;</div>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>cd ~/Downloads
+ssh -i "myapp-key-XX.pem" ec2-user@&lt;EC2のパブリックIPまたはDNS名&gt;</div>
             </div>
           </div>
 
           <div class="step-container">
             <div class="step-header">
               <span class="step-number">2</span>
-              <span class="step-title">DockerとDocker Composeのインストール</span>
+              <span class="step-title">Dockerのインストール</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">EC2にDockerとDocker Compose pluginをインストールします。以下のコマンドを順に実行してください。</p>
-              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>sudo dnf update -y
+              <p class="text-paragraph">EC2にDockerをインストールします。以下のコマンドを順に実行してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># インストール済みパッケージを最新化
+sudo dnf update -y
+
+# Dockerをインストール
 sudo dnf install -y docker
+
+# Dockerサービスを起動
 sudo service docker start
+
+# サーバー再起動時にも自動でDockerが起動するように設定
 sudo systemctl enable docker
-sudo usermod -aG docker ec2-user
-sudo dnf install -y docker-compose-plugin</div>
+
+# ec2-userでもsudoなしでdockerコマンドを使えるように権限（グループ）追加
+sudo usermod -aG docker ec2-user</div>
             </div>
           </div>
 
@@ -1298,6 +1377,40 @@ sudo dnf install -y docker-compose-plugin</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">dockerグループに追加したあとは、一度ログアウトして入り直します。ターミナルで <code>exit</code> と入力して接続を切り、再度上記のSSHコマンドで接続してください。</p>
+            </div>
+          </div>
+
+          <div class="step-container">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <span class="step-title">Docker Composeのインストール</span>
+            </div>
+            <div class="step-content">
+              <p class="text-paragraph">EC2にDocker Compose pluginをインストールします。以下のコマンドを順に実行してください。</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># サーバーのCPUアーキテクチャを確認
+uname -m</div>
+              <p class="text-paragraph"><code>x86_64</code> と表示された場合</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># Dockerの設定ディレクトリを変数に格納
+DOCKER_CONFIG=\${DOCKER_CONFIG:-$HOME/.docker}
+# プラグイン保存用のディレクトリを作成
+mkdir -p $DOCKER_CONFIG/cli-plugins
+# Docker Composeの実行ファイルをダウンロード
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+# ダウンロードしたファイルに実行権限を付与
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+# インストールが成功したかバージョンを確認
+docker compose version</div>
+              <p class="text-paragraph"><code>aarch64</code> と表示された場合</p>
+              <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># Dockerの設定ディレクトリを変数に格納
+DOCKER_CONFIG=\${DOCKER_CONFIG:-$HOME/.docker}
+# プラグイン保存用のディレクトリを作成
+mkdir -p $DOCKER_CONFIG/cli-plugins
+# Docker Composeの実行ファイルをダウンロード
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-aarch64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+# ダウンロードしたファイルに実行権限を付与
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+# インストールが成功したかバージョンを確認
+docker compose version</div>
             </div>
           </div>
 
@@ -1322,14 +1435,14 @@ sudo dnf install -y docker-compose-plugin</div>
             </div>
             <div class="step-content">
               <p class="text-paragraph">ローカルのファイルはコンテナを「ビルド（<code>build:</code>）」する設定になっていますが、EC2ではECRから「イメージをダウンロード（<code>image:</code>）」する設定にする必要があります。</p>
-              <p class="text-paragraph">ローカルPCのエディタで <code>myapp/deploy/docker-compose.yml</code> を開き、以下のように書き換えて上書き保存します。（※ &lt;AWSアカウントID&gt; の部分はご自身の環境に合わせて書き換えてください）</p>
+              <p class="text-paragraph">ローカルPCのエディタで <code>myapp/deploy/docker-compose.yml</code> を開き、以下のように書き換えて上書き保存します。（※ &lt;AWSアカウントID&gt; と -XX の部分はご自身の環境に合わせて書き換えてください）</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button>services:
   frontend:
-    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-frontend:latest
+    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-frontend-XX:latest
     ports:
       - "80:80"
   backend:
-    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-backend:latest
+    image: &lt;AWSアカウントID&gt;.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-backend-XX:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sampledb
     depends_on:
@@ -1371,12 +1484,13 @@ volumes:
               <span class="step-title">ローカルPCからファイル転送（scp）を実行する</span>
             </div>
             <div class="step-content">
-              <p class="text-paragraph">ローカルの親フォルダ（<code>myapp/</code> のひとつ上の階層）に移動した状態で、以下の <code>scp</code> コマンドを実行してファイルを転送します。</p>
+              <p class="text-paragraph">ローカルの親フォルダ（<code>myapp/</code> のひとつ上の階層）に移動した状態で、以下の <code>scp</code> コマンドを実行してファイルを転送します。<br>
+              ※ <code>~/Downloads/myapp-key-XX.pem</code> の部分はご自身の環境に合わせて書き換えてください</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 1. docker-compose.yml を EC2 の deploy フォルダへ転送
-scp -i "your-key.pem" myapp/deploy/docker-compose.yml ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/deploy/
+scp -i "~/Downloads/myapp-key-XX.pem" myapp/deploy/docker-compose.yml ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/deploy/
 
 # 2. init.sql を EC2 の mysql フォルダへ転送
-scp -i "your-key.pem" myapp/mysql/init.sql ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/mysql/</div>
+scp -i "~/Downloads/myapp-key-XX.pem" myapp/mysql/init.sql ec2-user@&lt;EC2のパブリックIP&gt;:~/myapp/mysql/</div>
             </div>
           </div>
 
@@ -1388,7 +1502,8 @@ scp -i "your-key.pem" myapp/mysql/init.sql ec2-user@&lt;EC2のパブリックIP&
             <div class="step-content">
               <p class="text-paragraph">転送が完了したら、再度EC2にSSH接続し、デプロイ用フォルダに移動して起動コマンドを実行します。</p>
               <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">コピー</button># 再度EC2にSSH接続
-ssh -i "your-key.pem" ec2-user@&lt;EC2のパブリックIP&gt;
+cd ~/Downloads
+ssh -i "myapp-key-XX.pem" ec2-user@&lt;EC2のパブリックIP&gt;
 
 # 転送したフォルダに移動してコンテナを起動
 cd ~/myapp/deploy
